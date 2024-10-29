@@ -1,0 +1,203 @@
+john.doe@example.com|jane.smith@example.com|Meeting Reminder|Please be reminded of our meeting tomorrow at 10 AM.|2024-10-22 09:00|3|No
+winners.prize@mail.com|jane.smith@example.com|Congratulations! You've won a prize!|Click here to claim your free gift now!|2024-10-22 10:00|5|Yes
+alice.johnson@example.com|bob.brown@example.com|Project Update|The latest updates on the project are attached.|2024-10-22 09:30|2|No
+fastloan.approval@mail.com|bob.brown@example.com|You are pre-approved for a loan!|Act now to secure your financial future.|2024-10-22 11:00|4|Yes
+charlie.white@example.com|david.green@example.com|Weekly Newsletter|Check out our latest news and updates.|2024-10-22 10:30|1|No
+amazing.offer@promo.com|david.green@example.com|Amazing Offer Just for You!|Don’t miss out on this limited-time offer!|2024-10-22 12:00|5|Yes
+emily.james@example.com|frank.miller@example.com|Feedback Request|We value your feedback. Please fill out our survey.|2024-10-22 11:30|2|No
+urgent.security@alerts.com|frank.miller@example.com|Your account has been compromised!|Verify your identity now to secure your account.|2024-10-22 13:00|5|Yes
+george.wilson@example.com|hannah.jones@example.com|Invoice for Services Rendered|Attached is the invoice for the services provided.|2024-10-22 14:00|3|No
+exclusive.offer@deals.com|hannah.jones@example.com|Limited Time Investment Opportunity!|Invest now and watch your money grow!|2024-10-22 15:00|5|Yes
+isabella.moore@example.com|jack.taylor@example.com|Monthly Report|The monthly report is attached for your review.|2024-10-22 09:15|2|No
+claim.your.gift@offers.com|jack.taylor@example.com|You've been selected for a special offer!|Click here to claim your gift card!|2024-10-22 10:45|5|Yes
+james.harris@example.com|linda.clark@example.com|Team Outing|Join us for a team outing this Friday!|2024-10-22 10:00|3|No
+cash.offer@ads.com|linda.clark@example.com|Earn cash from home!|Start your online business today!|2024-10-22 11:15|5|Yes
+michael.lewis@example.com|nina.walker@example.com|Webinar Invitation|You're invited to our upcoming webinar.|2024-10-22 09:45|2|No
+limited.time.offer@sale.com|nina.walker@example.com|Act now to claim your free prize!|This offer expires soon!|2024-10-22 12:30|5|Yes
+olivia.allen@example.com|paul.king@example.com|Course Registration|Register now for our upcoming course.|2024-10-22 11:00|3|No
+investment.opportunity@mail.com|paul.king@example.com|You won’t believe this offer!|Exclusive deals just for you!|2024-10-22 13:30|5|Yes
+peter.hall@example.com|quinn.carter@example.com|Project Kickoff|Excited to kick off our new project!|2024-10-22 10:15|2|No
+surprise.gift@winners.com|quinn.carter@example.com|You could be the next big winner!|Play now for your chance to win!|2024-10-22 14:15|5|Yes
+rachel.hernandez@example.com|sophie.morris@example.com|Quarterly Review|Let’s discuss the quarterly review this week.|2024-10-22 09:05|3|No
+immediate.response@alerts.com|sophie.morris@example.com|Your chance to win a vacation!|Enter now to win a free trip!|2024-10-22 10:20|5|Yes
+steven.perez@example.com|tyler.edwards@example.com|Status Update|Here is the status update for our project.|2024-10-22 09:25|3|No
+special.offer@mail.com|tyler.edwards@example.com|Congratulations! You are a winner!|Claim your prize now!|2024-10-22 12:50|5|Yes
+victoria.baker@example.com|uma.foster@example.com|Research Proposal|Please review the attached research proposal.|2024-10-22 08:50|3|No
+get.rich.quick@scams.com|uma.foster@example.com|Get rich quick scheme!|Join now and start making money fast!|2024-10-22 14:30|5|Yes
+william.james@example.com|violet.reed@example.com|Job Application|Thank you for your application. We will review it soon.|2024-10-22 09:15|2|No
+huge.savings@promo.com|violet.reed@example.com|Huge savings on electronics!|Shop now for the best deals!|2024-10-22 11:50|5|Yes
+xander.johnson@example.com|zoe.hall@example.com|Team Meeting|Let’s meet to discuss the project timeline.|2024-10-22 09:05|3|No
+last.chance.win@contests.com|zoe.hall@example.com|Last chance to win a luxury car!|Enter the contest now!|2024-10-22 10:15|5|Yes
+abigail.mitchell@example.com|aaron.lane@example.com|Sick Leave Notification|I will be on sick leave this week.|2024-10-22 08:40|2|No
+urgent.alerts@scams.com|aaron.lane@example.com|Your account is in danger!|Verify your information immediately!|2024-10-22 15:10|5|Yes
+benjamin.scott@example.com|catherine.brown@example.com|Training Session|Don't forget the training session tomorrow.|2024-10-22 09:10|2|No
+get.rich.quick@ads.com|catherine.brown@example.com|Exclusive members-only offer!|Join now for amazing benefits!|2024-10-22 11:25|5|Yes
+oliver.morris@example.com|daniel.hall@example.com|Customer Feedback|We would love your feedback on our service.|2024-10-22 10:20|1|No
+free.gift@promotions.com|daniel.hall@example.com|Free gift for signing up!|Complete this survey and claim your gift!|2024-10-22 12:15|5|Yes
+samantha.jones@example.com|nathan.perez@example.com|Product Launch|Excited to announce our new product launch!|2024-10-22 10:45|2|No
+contest.win@chance.com|nathan.perez@example.com|You have a new message!|Click here to view your message.|2024-10-22 14:00|5|Yes
+olivia.foster@example.com|paul.watson@example.com|Conference Reminder|Reminder about the upcoming conference next month.|2024-10-22 08:35|3|No
+limited.offer@promotion.com|paul.watson@example.com|Act fast! Limited time offer!|Don’t miss this incredible deal!|2024-10-22 15:05|5|Yes
+laura.bell@example.com|susan.kelly@example.com|Holiday Party|Join us for the annual holiday party.|2024-10-22 09:00|2|No
+prize.win@deals.com|susan.kelly@example.com|Your account is in danger!|Verify your information immediately!|2024-10-22 10:30|5|Yes
+james.johnson@example.com|nina.martinez@example.com|Status Update|Here is the status update for our project.|2024-10-22 09:45|2|No
+winners.announcement@contest.com|nina.martinez@example.com|Congratulations! You are a winner!|Claim your prize now!|2024-10-22 12:00|5|Yes
+john.smith@example.com|mary.jones@example.com|Meeting Follow-Up|Thanks for attending the meeting. Here are the notes.|2024-10-22 09:10|3|No
+win.a.vacation@contest.com|mary.jones@example.com|You could win a vacation!|Enter now to win a free vacation!|2024-10-22 10:15|5|Yes
+lucas.brown@example.com|emma.williams@example.com|Weekly Update|Here is the weekly update on our project.|2024-10-22 09:30|2|No
+easy.loan@finance.com|emma.williams@example.com|Instant Loan Approval!|Get your loan approved in minutes!|2024-10-22 11:00|4|Yes
+noah.johnson@example.com|olivia.smith@example.com|Q1 Financial Report|Attached is the Q1 financial report for review.|2024-10-22 10:30|3|No
+free.gift.card@promo.com|olivia.smith@example.com|Claim your free gift card!|Don’t miss this limited-time offer!|2024-10-22 12:00|5|Yes
+mason.davis@example.com|ava.taylor@example.com|Customer Satisfaction Survey|Please take a moment to complete our survey.|2024-10-22 09:45|2|No
+get.rich.fast@opportunity.com|ava.taylor@example.com|Make money from home!|Join our program and start earning today!|2024-10-22 13:15|5|Yes
+isabella.clark@example.com|liam.miller@example.com|Feedback Request|We value your feedback. Please fill out our survey.|2024-10-22 11:30|2|No
+exclusive.invite@events.com|liam.miller@example.com|You're invited to an exclusive event!|Don't miss out on this special invitation!|2024-10-22 14:30|5|Yes
+ethan.jones@example.com|noah.wilson@example.com|New Project Announcement|We are excited to announce a new project.|2024-10-22 09:05|3|No
+urgent.alerts@notifications.com|noah.wilson@example.com|Important account alert!|Your account has unusual activity. Verify now!|2024-10-22 10:30|5|Yes
+grace.martin@example.com|charlie.thomas@example.com|Meeting Reminder|Don’t forget our meeting tomorrow at 10 AM.|2024-10-22 09:15|3|No
+special.offer@mail.com|charlie.thomas@example.com|Limited Time Offer on Electronics!|Shop now and save big!|2024-10-22 12:45|5|Yes
+aaron.rodriguez@example.com|lily.wilson@example.com|Project Update|Here’s the latest on the project status.|2024-10-22 10:15|2|No
+win.a.luxury.car@prizes.com|lily.wilson@example.com|You have a chance to win a car!|Enter now for your chance to win!|2024-10-22 13:30|5|Yes
+sophia.james@example.com|oliver.martin@example.com|Job Application Update|We appreciate your application and will review it.|2024-10-22 08:50|2|No
+get.free.bonuses@offers.com|oliver.martin@example.com|Claim your bonuses now!|Don’t miss out on free bonuses!|2024-10-22 11:55|5|Yes
+jacob.harris@example.com|ella.thompson@example.com|Quarterly Review|Let’s discuss the quarterly results this week.|2024-10-22 10:40|3|No
+cash.winner@promotions.com|ella.thompson@example.com|You've won cash!|Claim your cash prize today!|2024-10-22 12:10|5|Yes
+michael.lewis@example.com|grace.jackson@example.com|Team Meeting|Reminder about the team meeting tomorrow.|2024-10-22 09:20|3|No
+amazing.offer@ads.com|grace.jackson@example.com|Amazing deals just for you!|Shop now for exclusive discounts!|2024-10-22 11:05|5|Yes
+amelia.adams@example.com|harry.scott@example.com|Training Confirmation|Your training session is confirmed for next week.|2024-10-22 09:45|2|No
+special.discount@promotions.com|harry.scott@example.com|Limited Time Discount on Products!|Don’t miss this exclusive offer!|2024-10-22 14:20|5|Yes
+lily.lee@example.com|benjamin.hall@example.com|Webinar Reminder|Reminder for the upcoming webinar next week.|2024-10-22 10:05|2|No
+prize.notify@contest.com|benjamin.hall@example.com|You’ve won a special prize!|Click here to claim your prize!|2024-10-22 12:30|5|Yes
+olivia.james@example.com|james.miller@example.com|Budget Meeting|Don’t forget the budget meeting this Friday.|2024-10-22 09:30|3|No
+get.rich.quick@offers.com|james.miller@example.com|Start earning money today!|Join our program and see results fast!|2024-10-22 13:45|5|Yes
+harper.clark@example.com|lucas.white@example.com|Product Launch|We are excited to announce our new product launch!|2024-10-22 10:25|2|No
+limited.offer@promo.com|lucas.white@example.com|Limited Time Offer on Services!|Sign up now for amazing savings!|2024-10-22 11:50|5|Yes
+jackson.martinez@example.com|sophia.thompson@example.com|Customer Feedback|We appreciate your feedback on our services.|2024-10-22 09:10|2|No
+urgent.winner@prizes.com|sophia.thompson@example.com|Congratulations! You've won a prize!|Click to claim your gift now!|2024-10-22 15:00|5|Yes
+noah.adams@example.com|emma.taylor@example.com|Meeting Confirmation|Your meeting is confirmed for this Friday.|2024-10-22 08:55|3|No
+get.rich@business.com|emma.taylor@example.com|Become a millionaire!|Join now and start your journey to wealth!|2024-10-22 10:10|5|Yes
+ella.brown@example.com|liam.james@example.com|Important Update|Please review the attached document.|2024-10-22 09:50|2|No
+win.exclusive.prizes@contest.com|liam.james@example.com|You have been selected!|Claim your exclusive prize today!|2024-10-22 11:35|5|Yes
+ariana.scott@example.com|noah.wilson@example.com|Training Reminder|Don't forget your training session tomorrow.|2024-10-22 10:40|3|No
+special.offer@deals.com|noah.wilson@example.com|Unlock your special deal now!|Don’t miss out on this opportunity!|2024-10-22 12:15|5|Yes
+benjamin.lewis@example.com|victoria.miller@example.com|Team Outing|Join us for a fun team outing next week!|2024-10-22 09:30|2|No
+exclusive.deal@mail.com|victoria.miller@example.com|Exclusive deal just for you!|Limited time offer - act fast!|2024-10-22 13:20|5|Yes
+madison.hall@example.com|samantha.johnson@example.com|Q2 Strategy Meeting|Let’s discuss our strategy for the next quarter.|2024-10-22 09:05|3|No
+money.make@business.com|samantha.johnson@example.com|Make money from home!|Join us and start earning today!|2024-10-22 14:00|5|Yes
+sofia.james@example.com|elijah.rodriguez@example.com|Feedback Requested|Your feedback is important to us!|2024-10-22 10:15|2|No
+free.offer@promotion.com|elijah.rodriguez@example.com|Claim your free offer now!|Don't miss out on this amazing deal!|2024-10-22 12:50|5|Yes
+william.taylor@example.com|nora.thompson@example.com|Status Report|Please find the status report attached.|2024-10-22 09:25|3|No
+winners.announcement@lottery.com|nora.thompson@example.com|You have a chance to win!|Click here to enter our lottery!|2024-10-22 11:10|5|Yes
+harry.wilson@example.com|amelia.lee@example.com|Meeting Notes|Here are the notes from our last meeting.|2024-10-22 09:45|3|No
+urgent.winner@prizes.com|amelia.lee@example.com|Congratulations! You are a winner!|Claim your prize before it expires!|2024-10-22 10:20|5|Yes
+ava.johnson@example.com|ethan.martin@example.com|Follow-Up on Project|Just checking in on the project timeline.|2024-10-22 08:30|3|No
+exclusive.offer@discounts.com|ethan.martin@example.com|Exclusive offer just for you!|Shop now and save big!|2024-10-22 10:05|5|Yes
+sophia.wilson@example.com|liam.thompson@example.com|Reminder: Meeting Tomorrow|Don't forget our meeting at 3 PM tomorrow.|2024-10-22 09:10|3|No
+win.a.free.laptop@contest.com|liam.thompson@example.com|You could win a free laptop!|Enter the contest now!|2024-10-22 11:20|5|Yes
+jackson.smith@example.com|olivia.james@example.com|Q3 Budget Planning|Let's finalize the budget for Q3.|2024-10-22 08:50|2|No
+special.offer@products.com|olivia.james@example.com|Get your discount on new products!|Limited time offer, act fast!|2024-10-22 10:30|5|Yes
+mason.brown@example.com|isabella.clark@example.com|Weekly Check-In|How are we doing on the project?|2024-10-22 09:15|2|No
+free.gift@promotions.com|isabella.clark@example.com|Claim your free gift now!|Don’t miss out on this limited-time offer!|2024-10-22 12:00|5|Yes
+elijah.jones@example.com|amelia.adams@example.com|Project Feedback|Please provide your feedback on the project.|2024-10-22 09:45|2|No
+win.a.samsung@contest.com|amelia.adams@example.com|You have a chance to win a Samsung phone!|Enter now!|2024-10-22 13:00|5|Yes
+michael.smith@example.com|sofia.harris@example.com|Monthly Report|Here’s the monthly report for review.|2024-10-22 10:20|3|No
+cash.prize@lottery.com|sofia.harris@example.com|You’ve won a cash prize!|Claim your winnings today!|2024-10-22 14:10|5|Yes
+lily.jones@example.com|noah.taylor@example.com|Client Meeting Reminder|Reminder about the client meeting tomorrow.|2024-10-22 09:30|3|No
+exclusive.sales@deals.com|noah.taylor@example.com|Exclusive sales just for you!|Shop now for amazing discounts!|2024-10-22 11:45|5|Yes
+grace.adams@example.com|liam.martin@example.com|Team Update|Here’s the latest update from the team.|2024-10-22 10:10|2|No
+money.making@business.com|liam.martin@example.com|Make money fast!|Join our program and start earning!|2024-10-22 12:30|5|Yes
+benjamin.johnson@example.com|victoria.thompson@example.com|Project Launch|Excited to announce the launch of our project!|2024-10-22 09:20|3|No
+win.a.free.trip@vacation.com|victoria.thompson@example.com|You could win a free trip!|Enter now for your chance to win!|2024-10-22 13:40|5|Yes
+amelia.martin@example.com|elijah.wilson@example.com|Update on Progress|How's the progress on the current project?|2024-10-22 10:15|2|No
+exclusive.discount@offers.com|elijah.wilson@example.com|Get your exclusive discount now!|Limited time offer!|2024-10-22 12:05|5|Yes
+olivia.brown@example.com|sophia.miller@example.com|Weekly Report|Here’s the weekly report for your review.|2024-10-22 09:50|3|No
+cash.prizes@offers.com|sophia.miller@example.com|You’ve won cash prizes!|Claim your cash rewards now!|2024-10-22 11:30|5|Yes
+liam.davis@example.com|madison.jones@example.com|Meeting Agenda|Attached is the agenda for our meeting.|2024-10-22 09:10|3|No
+amazing.offer@deals.com|madison.jones@example.com|Amazing offers just for you!|Don't miss out on these deals!|2024-10-22 14:20|5|Yes
+noah.wilson@example.com|harper.taylor@example.com|Feedback Needed|We need your feedback on the proposal.|2024-10-22 10:40|2|No
+you.win@lottery.com|harper.taylor@example.com|You’ve won the lottery!|Claim your winnings now!|2024-10-22 12:15|5|Yes
+sophia.clark@example.com|jacob.johnson@example.com|Project Timeline|Here’s the updated project timeline.|2024-10-22 09:30|3|No
+urgent.notification@alerts.com|jacob.johnson@example.com|Important notification regarding your account.|Please verify your information.|2024-10-22 11:55|5|Yes
+ava.martinez@example.com|mason.hall@example.com|Client Follow-Up|Following up with the client regarding feedback.|2024-10-22 09:45|2|No
+get.rich.very.fast@business.com|mason.hall@example.com|Become a millionaire quickly!|Join us now!|2024-10-22 10:50|5|Yes
+jackson.lewis@example.com|isabella.rodriguez@example.com|Training Reminder|Reminder about your training session tomorrow.|2024-10-22 09:00|3|No
+win.exclusive.prizes@promotions.com|isabella.rodriguez@example.com|You have a chance to win exclusive prizes!|Enter today!|2024-10-22 14:05|5|Yes
+madison.harris@example.com|charlie.adams@example.com|Status Update|Please send an update on the project status.|2024-10-22 10:25|2|No
+amazing.deal@offers.com|charlie.adams@example.com|Amazing deals waiting for you!|Check them out now!|2024-10-22 13:50|5|Yes
+elijah.miller@example.com|sophia.taylor@example.com|Meeting Confirmation|Your meeting is confirmed for next week.|2024-10-22 09:15|3|No
+free.vacation@contest.com|sophia.taylor@example.com|You could win a free vacation!|Enter now for your chance to win!|2024-10-22 11:15|5|Yes
+harper.smith@example.com|olivia.johnson@example.com|Q1 Review|Attached is the Q1 review document.|2024-10-22 09:35|2|No
+exclusive.invite@events.com|olivia.johnson@example.com|You’re invited to a special event!|Don’t miss out on this exclusive invitation!|2024-10-22 12:20|5|Yes
+noah.james@example.com|ava.brown@example.com|Project Goals|Let’s discuss our project goals in the next meeting.|2024-10-22 09:05|3|No
+win.a.mystery.gift@prizes.com|ava.brown@example.com|You’ve won a mystery gift!|Claim your gift now!|2024-10-22 14:10|5|Yes
+madison.davis@example.com|liam.adams@example.com|New Project Kickoff|Let’s kick off the new project next week.|2024-10-22 10:30|2|No
+get.rich@business.com|liam.adams@example.com|Start making money today!|Join our program for great rewards!|2024-10-22 12:35|5|Yes
+sophia.adams@example.com|jackson.lewis@example.com|Client Feedback|Requesting feedback from our clients.|2024-10-22 09:50|3|No
+win.a.gift.card@contest.com|jackson.lewis@example.com|You could win a gift card!|Enter now to win!|2024-10-22 11:45|5|Yes
+isabella.miller@example.com|harry.thompson@example.com|Meeting Schedule|Let’s schedule a meeting for next week.|2024-10-22 09:15|2|No
+special.discount@promo.com|harry.thompson@example.com|Exclusive discounts just for you!|Don’t miss this opportunity!|2024-10-22 14:30|5|Yes
+jacob.harrison@example.com|charlotte.james@example.com|Weekly Review|Here’s the weekly review for your perusal.|2024-10-22 09:40|3|No
+claim.your.prize@prizes.com|charlotte.james@example.com|Congratulations! You’ve won a prize!|Claim it now!|2024-10-22 12:45|5|Yes
+mason.clark@example.com|lily.wilson@example.com|Project Planning|Let’s finalize the project planning.|2024-10-22 10:05|2|No
+limited.time.offer@discounts.com|lily.wilson@example.com|Limited time offer just for you!|Shop now and save big!|2024-10-22 11:00|5|Yes
+ava.james@example.com|liam.jones@example.com|Next Steps|What are our next steps on this project?|2024-10-22 09:25|3|No
+get.rich.quick@business.com|liam.jones@example.com|Become rich overnight!|Join us now for amazing opportunities!|2024-10-22 10:55|5|Yes
+noah.rodriguez@example.com|grace.brown@example.com|Project Update|Here’s the latest update on the project.|2024-10-22 09:55|2|No
+win.a.samsung.phone@contest.com|grace.brown@example.com|You could win a Samsung phone!|Enter now for your chance!|2024-10-22 12:55|5|Yes
+jackson.james@example.com|sophia.rodriguez@example.com|Meeting Reminder|Just a reminder about our meeting tomorrow.|2024-10-22 10:15|3|No
+big.prizes@lottery.com|sophia.rodriguez@example.com|You’ve won a big prize!|Claim your winnings today!|2024-10-22 14:45|5|Yes
+madison.lewis@example.com|noah.thomas@example.com|Final Review|Please review the final document.|2024-10-22 09:10|2|No
+exclusive.offer@promotions.com|noah.thomas@example.com|Exclusive offer just for you!|Don’t miss out on this amazing deal!|2024-10-22 11:50|5|Yes
+lily.martin@example.com|emily.brown@example.com|Feedback Needed|We need your feedback on the project.|2024-10-22 09:40|2|No
+amazing.vacation@contest.com|emily.brown@example.com|You could win a vacation!|Enter now!|2024-10-22 12:50|5|Yes
+mason.taylor@example.com|sophia.green@example.com|Team Meeting Scheduled|The team meeting is set for Friday.|2024-10-22 09:30|2|No
+win.a.free.tablet@offers.com|sophia.green@example.com|You could win a free tablet!|Enter now for your chance!|2024-10-22 11:10|5|Yes
+harper.clark@example.com|noah.jones@example.com|Monthly Sales Report|Here’s the monthly sales report for your review.|2024-10-22 09:45|3|No
+big.win@lottery.com|noah.jones@example.com|You’ve won a big lottery prize!|Claim your winnings now!|2024-10-22 12:30|5|Yes
+jackson.miller@example.com|isabella.thompson@example.com|Quarterly Review|Attached is the quarterly review document.|2024-10-22 10:05|3|No
+exclusive.invitation@events.com|isabella.thompson@example.com|You’re invited to an exclusive event!|Don’t miss out on this invitation!|2024-10-22 14:15|5|Yes
+grace.rodriguez@example.com|olivia.brown@example.com|New Project Update|Here’s the update on our new project.|2024-10-22 09:20|2|No
+cash.prize@prizes.com|olivia.brown@example.com|Congratulations! You’ve won a cash prize!|Claim it now!|2024-10-22 12:40|5|Yes
+benjamin.jones@example.com|madison.smith@example.com|Feedback Request|Please provide feedback on the recent proposal.|2024-10-22 10:20|3|No
+win.a.free.speaker@contest.com|madison.smith@example.com|You could win a free speaker!|Enter now!|2024-10-22 14:35|5|Yes
+harper.james@example.com|mason.adams@example.com|Weekly Meeting Agenda|The agenda for our weekly meeting is attached.|2024-10-22 09:50|3|No
+special.offers@discounts.com|mason.adams@example.com|Exclusive offers waiting for you!|Check them out today!|2024-10-22 12:10|5|Yes
+isabella.brown@example.com|liam.martin@example.com|Project Discussion|Let’s discuss the project details in our next meeting.|2024-10-22 10:00|2|No
+amazing.deal@products.com|liam.martin@example.com|Amazing deals just for you!|Shop now for exclusive discounts!|2024-10-22 14:50|5|Yes
+noah.green@example.com|grace.johnson@example.com|Client Follow-Up|Following up on our last meeting with the client.|2024-10-22 09:15|3|No
+win.a.free.vacation@promotions.com|grace.johnson@example.com|You could win a free vacation!|Enter now for your chance!|2024-10-22 11:45|5|Yes
+lily.james@example.com|charlie.rodriguez@example.com|Budget Meeting Reminder|Don’t forget about our budget meeting.|2024-10-22 09:35|2|No
+special.discount@offers.com|charlie.rodriguez@example.com|Get your special discount today!|Don’t miss out!|2024-10-22 13:00|5|Yes
+harper.smith@example.com|isabella.williams@example.com|Project Proposal|Attached is the project proposal for your review.|2024-10-22 10:15|3|No
+you.win@lottery.com|isabella.williams@example.com|Congratulations! You’ve won!|Claim your prize now!|2024-10-22 12:25|5|Yes
+grace.martin@example.com|madison.hall@example.com|Status Update|Here’s the current status of the project.|2024-10-22 09:40|2|No
+exclusive.offer@deals.com|madison.hall@example.com|Exclusive offer just for you!|Shop now and save big!|2024-10-22 14:00|5|Yes
+liam.jones@example.com|sophia.harrison@example.com|Meeting Confirmation|Your meeting is confirmed for Thursday.|2024-10-22 09:50|3|No
+win.a.laptop@contest.com|sophia.harrison@example.com|You could win a new laptop!|Enter today!|2024-10-22 12:50|5|Yes
+mason.smith@example.com|charlotte.brown@example.com|Client Feedback|Requesting feedback from our clients.|2024-10-22 10:25|2|No
+cash.reward@lottery.com|charlotte.brown@example.com|You’ve won a cash reward!|Claim your reward now!|2024-10-22 14:25|5|Yes
+madison.wilson@example.com|benjamin.jones@example.com|Quarterly Meeting|Reminder about the quarterly meeting on Friday.|2024-10-22 09:05|3|No
+amazing.prizes@promotions.com|benjamin.jones@example.com|You could win amazing prizes!|Enter now!|2024-10-22 12:05|5|Yes
+sophia.clark@example.com|noah.davis@example.com|Update Required|Please provide an update on your tasks.|2024-10-22 09:30|2|No
+win.a.gift.card@contest.com|noah.davis@example.com|You have a chance to win a gift card!|Enter now!|2024-10-22 13:15|5|Yes
+elijah.rodriguez@example.com|mason.hall@example.com|Team Check-In|Just checking in with the team’s progress.|2024-10-22 10:10|3|No
+exclusive.sale@offers.com|mason.hall@example.com|Exclusive sale happening now!|Shop for great deals!|2024-10-22 14:45|5|Yes
+lily.johnson@example.com|liam.martin@example.com|Project Wrap-Up|Let’s wrap up the project details before submission.|2024-10-22 09:15|3|No
+free.vacation@lottery.com|liam.martin@example.com|You could win a free vacation!|Enter today!|2024-10-22 11:20|5|Yes
+madison.harrison@example.com|noah.smith@example.com|Weekly Review|Here’s the weekly review document.|2024-10-22 09:55|2|No
+claim.your.prize@promotions.com|noah.smith@example.com|Congratulations! You’ve won a prize!|Claim it now!|2024-10-22 13:50|5|Yes
+mason.adams@example.com|isabella.miller@example.com|Monthly Summary|Attached is the monthly summary report.|2024-10-22 10:45|3|No
+amazing.offer@deals.com|isabella.miller@example.com|Get amazing offers today!|Don’t miss out!|2024-10-22 12:15|5|Yes
+sophia.james@example.com|jackson.jones@example.com|Upcoming Training|Don’t forget about the upcoming training session.|2024-10-22 09:25|3|No
+win.exclusive.gifts@contest.com|jackson.jones@example.com|You could win exclusive gifts!|Enter now!|2024-10-22 14:20|5|Yes
+charlotte.adams@example.com|lily.taylor@example.com|New Client Introduction|Here’s an introduction to our new client.|2024-10-22 09:50|2|No
+big.prizes@lottery.com|lily.taylor@example.com|You’ve won big prizes!|Claim your rewards now!|2024-10-22 12:40|5|Yes
+noah.brown@example.com|grace.clark@example.com|Client Meeting Follow-Up|Following up on our client meeting last week.|2024-10-22 10:30|3|No
+cash.reward@offers.com|grace.clark@example.com|You’ve earned a cash reward!|Claim it now!|2024-10-22 14:50|5|Yes
+isabella.taylor@example.com|noah.rodriguez@example.com|Project Update Needed|Please provide an update on your project status.|2024-10-22 09:15|2|No
+amazing.sales@discounts.com|noah.rodriguez@example.com|Amazing sales happening now!|Don’t miss out on these deals!|2024-10-22 12:55|5|Yes
+mason.hall@example.com|jackson.miller@example.com|Next Steps Discussion|Let’s discuss the next steps for our project.|2024-10-22 09:45|3|No
+win.a.new.phone@contest.com|jackson.miller@example.com|You could win a new phone!|Enter now!|2024-10-22 11:30|5|Yes
+sophia.martin@example.com|liam.jones@example.com|Performance Review|Your performance review is scheduled.|2024-10-22 09:10|2|No
+exclusive.offer@prizes.com|liam.jones@example.com|Exclusive offer for our valued customers!|Claim now!|2024-10-22 14:10|5|Yes
+
