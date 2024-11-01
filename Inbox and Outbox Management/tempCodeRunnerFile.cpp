@@ -1,0 +1,1 @@
+std::cout << "Emails loaded from " << filename << "." << std::endl;
