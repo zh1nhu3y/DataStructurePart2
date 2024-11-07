@@ -15,7 +15,7 @@ const int MAX_SPAM_WORDS = 100;
 class SpamDetection
 {
 public:
-    // Function to load spam word from text file
+    // Loads spam words from a file into an array
     int loadSpamWords(const string &filename, string spamWords[], int maxWords)
     {
         cout << "Loading Spam Words File" << endl;
@@ -25,6 +25,7 @@ public:
         if (file.is_open())
         {
             string word;
+            // Read each word and store it in the array
             while (file >> word && count < maxWords)
             {
                 spamWords[count++] = word;
@@ -49,28 +50,29 @@ public:
     // Partition function for quick sort
     int partition(string spamWords[], int low, int high)
     {
-        string pivot = spamWords[high];
+        string pivot = spamWords[high]; // Select the last element as pivot
         int i = low - 1;
         for (int j = low; j < high; j++)
         {
+            // Place smaller elements to the left of the pivot
             if (spamWords[j] < pivot)
             {
                 i++;
                 swap(spamWords[i], spamWords[j]);
             }
         }
-        swap(spamWords[i + 1], spamWords[high]);
+        swap(spamWords[i + 1], spamWords[high]); // Place pivot in correct position
         return i + 1;
     }
 
-    // Quick Sort function
+    // Quick Sort function to sort spam words file
     void quickSort(string spamWords[], int low, int high)
     {
         if (low < high)
         {
             int pi = partition(spamWords, low, high);
-            quickSort(spamWords, low, pi - 1);
-            quickSort(spamWords, pi + 1, high);
+            quickSort(spamWords, low, pi - 1);  // Sort elements before pivot
+            quickSort(spamWords, pi + 1, high); // Sort elements after pivot
         }
     }
 
@@ -99,7 +101,7 @@ public:
         return false; // Spam word not found
     }
 
-    // Enqueue email from file
+    // Enqueue all email from file
     void enqueueEmail(const string &filename, EmailQueue &emailQueue)
     {
         cout << "Loading Emails from File." << endl;
@@ -146,7 +148,7 @@ public:
         emailFile.close();
     }
 
-    // WILL REMOVE LATER: Update spam status for all emails
+    // WILL REMOVE LATER: Update spam status for all emails (ONLY USED ONCE FOR DUMMY DATA)
     // void checkSpamStatus(EmailQueue &emailQueue, string spamWords[], int spamWordCount, const string &filename)
     // {
     //     EmailNode *current = emailQueue.getFront();
@@ -197,7 +199,7 @@ public:
                 break;
             }
         }
-        email->spamStatus = isSpam ? "Yes" : "No";
+        email->spamStatus = isSpam ? "Yes" : "No"; // Set spam status
 
         // Enqueue the email
         emailQueue.enqueue(email->id, email->senderEmail, email->recipientEmail, email->title,
@@ -219,6 +221,7 @@ public:
         }
     }
 
+    // Function to display all spam emails
     void displaySpamEmails(EmailQueue &emailQueue)
     {
         EmailNode *current = emailQueue.getFront();
@@ -244,6 +247,7 @@ public:
             cout << "No spam emails found." << endl;
     }
 
+    // Function to mark an email as spam and saves the updated queue to file
     void markAsSpam(EmailQueue &emailQueue, int id, const string &filename)
     {
         EmailNode *current = emailQueue.getFront();
@@ -251,7 +255,7 @@ public:
         {
             if (current->id == id)
             {
-                current->spamStatus = "Yes";
+                current->spamStatus = "Yes"; // Mark as spam
                 cout << "Email with ID " << id << " has been marked as spam." << endl;
                 emailQueue.saveToFile(filename); // Save after marking as spam
                 return;
@@ -261,6 +265,7 @@ public:
         cout << "Email with ID " << id << " not found." << endl;
     }
 
+    // Function to unmark an email as spam and saves the updated queue to file
     void unmarkAsSpam(EmailQueue &emailQueue, int id, const string &filename)
     {
         EmailNode *current = emailQueue.getFront();
@@ -268,7 +273,7 @@ public:
         {
             if (current->id == id)
             {
-                current->spamStatus = "No";
+                current->spamStatus = "No"; // Unmark as spam
                 cout << "Email with ID " << id << " has been unmarked as spam." << endl;
                 emailQueue.saveToFile(filename); // Save after unmarking as spam
                 return;

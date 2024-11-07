@@ -4,6 +4,7 @@
 #include <algorithm>
 using namespace std;
 
+// Node structure for each email in the queue
 struct EmailNode
 {
     int id;
@@ -18,10 +19,11 @@ struct EmailNode
     EmailNode *next;
 };
 
+// Class for managing a queue of emails
 class EmailQueue
 {
-    EmailNode *front;
-    EmailNode *rear;
+    EmailNode *front; // Pointer to the front of the queue
+    EmailNode *rear;  // Pointer to the rear of the queue
 
 public:
     EmailQueue()
@@ -30,6 +32,7 @@ public:
         rear = nullptr;
     }
 
+    // Enqueue function to add a new email to the rear of the queue
     void enqueue(int id, const string &sender, const string &recipient, const string &title, const string &content,
                  const string &dateTime, const string &status, int priority, const string &spamStatus)
     {
@@ -45,6 +48,7 @@ public:
         }
     }
 
+    // Dequeue function to remove the front email from the queue
     void dequeue()
     {
         if (front == nullptr)
@@ -59,16 +63,19 @@ public:
         delete temp;
     }
 
+    // Function to check if the queue is empty
     bool isEmpty()
     {
         return front == nullptr;
     }
 
+    // Getter for the front of the queue
     EmailNode *getFront()
     {
         return front;
     }
 
+    // Function to save all emails in the queue to a file, overwriting the file's content
     void saveToFile(const string &filename)
     {
         ofstream outFile(filename);
@@ -78,6 +85,7 @@ public:
             return;
         }
 
+        // Traverse the queue and write each email's details to the file
         EmailNode *current = front;
         while (current != nullptr)
         {
@@ -96,13 +104,6 @@ public:
         outFile.close();
         cout << "Changes saved to file successfully." << endl;
     }
-
-    // Append to file for a new outbox email
-    void appendToFile(const string &filename)
-    {
-        ofstream of;
-        fstream f;
-        }
 
     ~EmailQueue()
     {
