@@ -116,7 +116,7 @@ void sendEmail(OutboxQueue& outbox, std::set<int>& existingIds, InboxStack& inbo
     }
 
     // Save the email to dummy_emails.txt
-    std::ofstream outFile("dummy_emails.txt", std::ios::app);
+    std::ofstream outFile("../Data/dummy_emails.txt", std::ios::app);
     if (outFile.is_open()) {
         outFile << emailToSend.id << "|"
                 << emailToSend.sender << "|"
@@ -141,7 +141,7 @@ int main() {
     Email latestEmail = {0}; // Initialize with a dummy email
 
     // Load emails from dummy_emails.txt into inbox and outbox
-    loadEmailsFromFile("dummy_emails.txt", inbox, outbox, existingIds, latestEmail);
+    loadEmailsFromFile("../Data/dummy_emails.txt", inbox, outbox, existingIds, latestEmail);
 
     // Display the latest email loaded
     if (latestEmail.id != 0) { // Check if a valid email was found
