@@ -1,7 +1,7 @@
 /**
  *  spamDetection.h
  */
-
+#include "emailQueue.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -10,119 +10,6 @@
 using namespace std;
 
 const int MAX_SPAM_WORDS = 100;
-
-// Node structure for email
-struct EmailNode
-{
-    string senderEmail;
-    string recipientEmail;
-    string title;
-    string content;
-    string dateTime;
-    int priority;
-    string spamStatus;
-
-    EmailNode *next;
-};
-
-class EmailQueue
-{
-    EmailNode *front;
-    EmailNode *rear;
-
-public:
-    EmailQueue()
-    {
-        front = nullptr;
-        rear = nullptr;
-    }
-
-    // Enqueue a new email (add to rear)
-    void enqueue(const string &sender, const string &recipient, const string &title, const string &content,
-                 const string &dateTime, int priority, const string &spamStatus)
-    {
-        EmailNode *newNode = new EmailNode();
-        newNode->senderEmail = sender;
-        newNode->recipientEmail = recipient;
-        newNode->title = title;
-        newNode->content = content;
-        newNode->dateTime = dateTime;
-        newNode->priority = priority;
-        newNode->spamStatus = spamStatus;
-
-        newNode->next = nullptr;
-
-        if (isEmpty())
-        {
-            front = rear = newNode;
-        }
-        else
-        {
-            rear->next = newNode;
-            rear = newNode;
-        }
-    }
-
-    // Dequeue an email (remove from front)
-    void dequeue()
-    {
-        if (front == nullptr)
-        {
-            cout << "Queue is underflow!" << endl;
-            return;
-        }
-
-        EmailNode *temp = front;
-
-        if (front == rear)
-        {
-            front = rear = nullptr;
-        }
-        else
-        {
-            front = front->next;
-        }
-
-        delete temp;
-    }
-
-    bool isEmpty()
-    {
-        return (front == nullptr) && (rear == nullptr);
-    }
-
-    EmailNode *getFront()
-    {
-        return front;
-    }
-
-    // Function to print all emails to the terminal
-    void printEmails()
-    {
-        EmailNode *current = front;
-        cout << "Processed Emails:" << endl;
-        while (current != nullptr)
-        {
-            cout << "Sender: " << current->senderEmail << endl
-                 << "Recipient: " << current->recipientEmail << endl
-                 << "Title: " << current->title << endl
-                 << "Content: " << current->content << endl
-                 << "Date: " << current->dateTime << endl
-                 << "Priority: " << current->priority << endl
-                 << "Spam Status: " << current->spamStatus << endl
-                 << "-----------------------------------" << endl;
-            current = current->next;
-        }
-    }
-
-    ~EmailQueue()
-    {
-        while (!isEmpty())
-        {
-            dequeue();
-        }
-    }
-};
 
 class SpamDetection
 {
@@ -211,6 +98,7 @@ public:
         return false; // Spam word not found
     }
 
+    // Enqueue email from file
     void enqueueEmail(const string &filename, EmailQueue &emailQueue)
     {
         cout << "Loading Emails from File." << endl;
@@ -257,41 +145,48 @@ public:
         emailFile.close();
     }
 
-    void checkSpamStatus(EmailQueue &emailQueue, string spamWords[], int spamWordCount)
+    // Update spam status for all emails
+    void SpamDetection::checkSpamStatus(EmailQueue &emailQueue, string spamWords[], int spamWordCount)
     {
-        cout << "Updating Spam Status for Emails" << endl;
-
         EmailNode *current = emailQueue.getFront();
-
         while (current != nullptr)
         {
-            // Check if the email content contains any spam words
-            bool isSpam = false;
-
-            // Split the content into words to check for spam
-            stringstream contentStream(current->content);
-            string word;
-
-            while (contentStream >> word)
-            {
-                if (binarySearch(word, spamWords, spamWordCount))
-                {
-                    isSpam = true;
-                    break;
-                }
-            }
-
-            // Update the spam status based on the check
-            if (isSpam)
-            {
-                current->spamStatus = "Yes";
-            }
-            else
-            {
-                current->spamStatus = "No";
-            }
-
+            checkSingleEmail(current, spamWords, spamWordCount);
             current = current->next;
         }
+    }
+
+    // Check spam for a single email
+    void SpamDetection::checkSingleEmail(EmailNode *email, string spamWords[], int spamWordCount)
+    {
+        stringstream contentStream(email->content);
+        string word;
+        bool isSpam = false;
+        while (contentStream >> word)
+        {
+            if (binarySearch(word, spamWords, spamWordCount))
+            {
+                isSpam = true;
+                break;
+            }
+        }
+        email->spamStatus = isSpam ? "Yes" : "No";
+        email->priority = isSpam ? 0 : email->priority;
+    }
+
+    // Function to check a new email message for spam and append it to the queue
+    void SpamDetection::checkAndAppendMessage(const string &sender, const string &recipient, const string &title,
+                                              const string &content, const string &dateTime, EmailQueue &emailQueue,
+                                              string spamWords[], int spamWordCount)
+    {
+        int priority = 1; // Default priority for new message
+        string spamStatus = "No";
+
+        EmailNode tempEmail{sender, recipient, title, content, dateTime, priority, spamStatus, nullptr};
+
+        checkSingleEmail(&tempEmail, spamWords, spamWordCount);
+
+        // Enqueue with updated priority and spam status
+        emailQueue.enqueue(sender, recipient, title, content, dateTime, tempEmail.priority, tempEmail.spamStatus);
     }
 };
