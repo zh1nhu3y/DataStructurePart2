@@ -82,14 +82,8 @@ void sendEmail(OutboxQueue& outbox, std::set<int>& existingIds, InboxStack& inbo
     // Set the current timestamp
     emailToSend.timestamp = getCurrentTimestamp();
 
-    // Gather status from the user (Received/Sent)
-    do {
-        std::cout << "Enter Status (Received/Sent): ";
-        std::getline(std::cin, emailToSend.status);
-        if (emailToSend.status != "Received" && emailToSend.status != "Sent") {
-            std::cout << "Warning: Status must be 'Received' or 'Sent'." << std::endl;
-        }
-    } while (emailToSend.status != "Received" && emailToSend.status != "Sent");
+    // Set the status to "Sent" as the default
+    emailToSend.status = "Sent";
 
     // Set priority and spam status
     do {
