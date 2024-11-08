@@ -126,7 +126,7 @@ public:
         Email *current = head;
         bool emailFound = false;
 
-        // Search in the priority queue and update priority
+        // Search for the email to update the priority in memory
         while (current) {
             if (current->id == emailID && (current->sender == currentUser || current->recipient == currentUser)) {
                 current->priority = newPriority;
@@ -142,25 +142,46 @@ public:
             return;
         }
 
-        // Rewriting email file with updated priority
+        // Rebuild the priority queue after updating priority
+        Email *orderedHead = nullptr;
+        current = head;
+        while (current) {
+            Email *nextEmail = current->next;
+            // Reinsert emails into orderedHead instead of head to ensure a correctly ordered list
+            if (!orderedHead || orderedHead->priority > current->priority) {
+                current->next = orderedHead;
+                orderedHead = current;
+            } else {
+                Email *temp = orderedHead;
+                while (temp->next && temp->next->priority <= current->priority) {
+                    temp = temp->next;
+                }
+                current->next = temp->next;
+                temp->next = current;
+            }
+            current = nextEmail;
+        }
+        head = orderedHead;
+
+        // Rewrite the entire email file with updated priorities
         ifstream inFile(emailFile);
         ofstream tempFile("temp.txt");
         string line;
 
         while (getline(inFile, line)) {
             stringstream ss(line);
-            string id, sender, recipient, subject, body, datetime, priorityStr;
+            string id, sender, recipient, subject, body, datetime, status, priorityStr, spamStatus;
             int priority;
 
-            // Read each attribute and handle formatting
+            // Parse each field including spamStatus
             if (!getline(ss, id, '|') || !getline(ss, sender, '|') || !getline(ss, recipient, '|') ||
                 !getline(ss, subject, '|') || !getline(ss, body, '|') || !getline(ss, datetime, '|') ||
-                !getline(ss, priorityStr, '|')) {
+                !getline(ss, status, '|') || !getline(ss, priorityStr, '|') || !getline(ss, spamStatus)) {
                 cerr << "Error: Incorrectly formatted line: " << line << endl;
                 continue;
             }
 
-            // Try converting priority; skip if there's a conversion issue
+            // Attempt to convert priority
             try {
                 priority = stoi(priorityStr);
             } catch (invalid_argument &) {
@@ -168,19 +189,20 @@ public:
                 continue;
             }
 
-            // Update priority if this is the targeted email
+            // Update priority if matching email ID and user
             if (id == emailID && (sender == currentUser || recipient == currentUser)) {
                 priority = newPriority;
             }
 
-            // Write the line with potentially updated priority
-            tempFile << id << "|" << sender << "|" << recipient << "|" << subject << "|" << body << "|" << datetime << "|" << priority << "\n";
+            // Write updated or original line to the temp file, including spamStatus
+            tempFile << id << "|" << sender << "|" << recipient << "|" << subject << "|" << body << "|" << datetime << "|"
+                    << status << "|" << priority << "|" << spamStatus << "\n";
         }
 
         inFile.close();
         tempFile.close();
 
-        // Replace the original file with the updated temporary file
+        // Replace original email file with the updated temp file
         if (remove(emailFile.c_str()) != 0) {
             cerr << "Error deleting original email file.\n";
             return;

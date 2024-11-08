@@ -645,7 +645,7 @@
 646|david.brown@sample.com|irene.johnson@sample.com|Weekly Status Report|Please review the holiday schedule and let us know your availability.|2024-10-12 13:00|Received|3|No
 647|jack.johnson@sample.com|jack.taylor@demo.com|Team Outing Details|Please review the holiday schedule and let us know your availability.|2024-10-17 09:22|Sent|1|No
 648|alice.taylor@test.com|alice.taylor@sample.com|Meeting Reminder|Please review the holiday schedule and let us know your availability.|2024-10-07 09:14|Sent|2|No
-649|charlie.johnson@demo.com|jack.anderson@sample.com|Weekly Status Report|This is an urgent request for action on the pending items.|2024-10-24 22:05|Received|3|Yes
+649|charlie.johnson@demo.com|jack.anderson@sample.com|Weekly Status Report|This is an urgent request for action on the pending items.|2024-10-24 22:05|Received|1|Yes
 650|irene.anderson@test.com|jack.lee@demo.com|Invoice Attached|Please review the holiday schedule and let us know your availability.|2024-10-17 02:37|Sent|2|No
 651|charlie.anderson@demo.com|jack.smith@demo.com|Urgent: Action Required|This is an urgent request for action on the pending items.|2024-10-24 20:27|Sent|2|Yes
 652|charlie.lee@test.com|fiona.anderson@example.com|Meeting Reminder|This is an urgent request for action on the pending items.|2024-10-01 11:20|Sent|5|Yes
