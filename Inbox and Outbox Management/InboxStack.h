@@ -16,23 +16,23 @@ struct Email {
     int priority;
     std::string spamStatus;
 
-    // Add constructor to match usage in SpamDetection.h
+    // Constructor
     Email(int _id, const std::string& _sender, const std::string& _receiver,
-          const std::string& _subject, const std::string& _body, 
+          const std::string& _subject, const std::string& _body,
           const std::string& _timestamp, const std::string& _status,
           int _priority, const std::string& _spamStatus = "No")
         : id(_id), sender(_sender), receiver(_receiver), subject(_subject),
           body(_body), timestamp(_timestamp), status(_status),
           priority(_priority), spamStatus(_spamStatus) {}
-    
-    // Default constructor for when we need to create an Email without parameters
+
+    // Default constructor
     Email() : id(0), priority(0), spamStatus("No") {}
 };
 
 // Node structure for the linked list
 struct Node {
     Email email;
-    Node* next; // Pointer to the next node
+    Node* next;
 
     // Constructor for Node
     Node(const Email& emailData, Node* nextNode = nullptr)
@@ -45,56 +45,56 @@ private:
     Node* top; // Pointer to the top of the stack
 
 public:
-    InboxStack();
+    // Constructor
+    InboxStack() : top(nullptr) {}
+
+    // Destructor
     ~InboxStack();
 
     void push(const Email& email);
     Email pop();
     bool isEmpty() const;
     void displayTop() const;
+    Node* getFront() const { return top; }
 };
 
-// Constructor
-InboxStack::InboxStack() : top(nullptr) {}
-
-// Destructor
-InboxStack::~InboxStack() {
+// Destructor implementation
+inline InboxStack::~InboxStack() {
     while (!isEmpty()) {
         pop();
     }
 }
 
-// Push method
-void InboxStack::push(const Email& email) {
-    Node* newNode = new Node(email, top); // Create new node using constructor
-    top = newNode; // Update top to the new node
+// Push method implementation
+inline void InboxStack::push(const Email& email) {
+    Node* newNode = new Node(email, top);
+    top = newNode;
 }
 
-// Pop method
-Email InboxStack::pop() {
+// Pop method implementation
+inline Email InboxStack::pop() {
     if (isEmpty()) {
         throw std::runtime_error("Stack is empty. Cannot pop.");
     }
-
-    Node* temp = top; // Store the current top node
-    Email email = top->email; // Get the email from the top node
-    top = top->next; // Move the top pointer to the next node
-    delete temp; // Free memory
-    return email; // Return the email
+    Node* temp = top;
+    Email email = top->email;
+    top = top->next;
+    delete temp;
+    return email;
 }
 
 // Check if the stack is empty
-bool InboxStack::isEmpty() const {
+inline bool InboxStack::isEmpty() const {
     return top == nullptr;
 }
 
 // Display the top email
-void InboxStack::displayTop() const {
+inline void InboxStack::displayTop() const {
     if (isEmpty()) {
         std::cout << "No emails in the inbox." << std::endl;
         return;
     }
-    const Email& topEmail = top->email; // Reference to the top email
+    const Email& topEmail = top->email;
     std::cout << "Top Email:\n"
               << "ID: " << topEmail.id << "\n"
               << "Sender: " << topEmail.sender << "\n"

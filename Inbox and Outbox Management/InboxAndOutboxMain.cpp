@@ -4,280 +4,284 @@
 #include <sstream>
 #include <ctime>
 #include <set>
+#include <algorithm>
 #include "InboxStack.h"
 #include "OutboxQueue.h"
 
-// Function to get the current timestamp in the desired format
-std::string getCurrentTimestamp() {
-    time_t now = time(0);
-    tm* localtm = localtime(&now);
-    char buffer[20];
-    strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M", localtm);
-    return std::string(buffer);
-}
-
-// Function to load emails from a file and distribute them into Inbox and Outbox
-void loadEmailsFromFile(const std::string& filename, InboxStack& inbox, OutboxQueue& outbox, std::set<int>& existingIds, Email& latestEmail) {
-    std::ifstream inFile(filename);
-    if (!inFile.is_open()) {
-        std::cerr << "Error opening file: " << filename << std::endl;
-        return;
-    }
-    std::string line;
-    while (std::getline(inFile, line)) {
-        Email email;
-        std::istringstream ss(line);
-        std::string temp;
-        // Parse the line using '|' as the delimiter
-        std::getline(ss, temp, '|');
-        email.id = std::stoi(temp);
-        std::getline(ss, email.sender, '|');
-        std::getline(ss, email.receiver, '|');
-        std::getline(ss, email.subject, '|');
-        std::getline(ss, email.body, '|');
-        std::getline(ss, email.timestamp, '|');
-        std::getline(ss, email.status, '|');
-        std::getline(ss, temp, '|');
-        email.priority = std::stoi(temp);
-        std::getline(ss, email.spamStatus, '|');
-        
-        // Track unique IDs
-        existingIds.insert(email.id);
-
-        // Update the latest email if this email has a higher ID
-        if (email.id > latestEmail.id) {
-            latestEmail = email;
-        }
-        
-        // Add email to Inbox or Outbox based on Status
-        if (email.status == "Received") {
-            inbox.push(email);
-        } else if (email.status == "Sent") {
-            outbox.enqueue(email);
-        }
-    }
-    inFile.close();
-    std::cout << "Emails loaded from " << filename << "." << std::endl;
-}
-
-// Function to enqueue an email to the outbox
-void sendEmail(OutboxQueue& outbox, std::set<int>& existingIds, InboxStack& inbox) {
-    Email emailToSend;
-
-    // Set the next available Email ID based on the highest value in existingIds
-    emailToSend.id = existingIds.empty() ? 1 : *existingIds.rbegin() + 1;
-
-    std::cout << "Email ID Assigned: " << emailToSend.id << std::endl;
-
-    // Gather the remaining email details from the user
-    std::cout << "Enter Sender: ";
-    std::getline(std::cin, emailToSend.sender);
-    std::cout << "Enter Receiver: ";
-    std::getline(std::cin, emailToSend.receiver);
-    std::cout << "Enter Subject: ";
-    std::getline(std::cin, emailToSend.subject);
-    std::cout << "Enter Body: ";
-    std::getline(std::cin, emailToSend.body);
-    
-    // Set the current timestamp
-    emailToSend.timestamp = getCurrentTimestamp();
-
-    // Set the status to "Sent" as the default
-    emailToSend.status = "Sent";
-
-    // Set priority and spam status
-    do {
-        std::cout << "Enter Priority (1-5): ";
-        std::cin >> emailToSend.priority;
-        std::cin.ignore(); // Ignore newline after priority input
-        if (emailToSend.priority < 1 || emailToSend.priority > 5) {
-            std::cout << "Warning: Priority must be between 1 and 5." << std::endl;
-        }
-    } while (emailToSend.priority < 1 || emailToSend.priority > 5);
-
-    std::cout << "Enter Spam Status (Yes/No): ";
-    std::getline(std::cin, emailToSend.spamStatus);
-
-    // Ensure the spam status is capitalized
-    std::transform(emailToSend.spamStatus.begin(), emailToSend.spamStatus.end(), emailToSend.spamStatus.begin(), ::tolower);
-
-    // Convert to "Yes" or "No"
-    if (emailToSend.spamStatus == "yes") {
-        emailToSend.spamStatus = "Yes";
-    } else if (emailToSend.spamStatus == "no") {
-        emailToSend.spamStatus = "No";
-    } else {
-        std::cout << "Invalid spam status. Please enter 'Yes' or 'No'.\n";
-        return;
-    }
-
-    // Enqueue the email into the outbox if the status is 'Sent'
-    if (emailToSend.status == "Sent") {
-        outbox.enqueue(emailToSend);
-        std::cout << "Email added to the outbox." << std::endl;
-        existingIds.insert(emailToSend.id);  // Add the newly assigned ID to existingIds set
-    } 
-    // Push to inbox if the status is 'Received'
-    else if (emailToSend.status == "Received") {
-        inbox.push(emailToSend); // Push to inbox stack
-        std::cout << "Email added to the inbox." << std::endl;
-    }
-
-    // Save the email to dummy_emails.txt
-    std::ofstream outFile("../Data/dummy_emails.txt", std::ios::app);
-    if (outFile.is_open()) {
-        outFile << emailToSend.id << "|"
-                << emailToSend.sender << "|"
-                << emailToSend.receiver << "|"
-                << emailToSend.subject << "|"
-                << emailToSend.body << "|"
-                << emailToSend.timestamp << "|"
-                << emailToSend.status << "|"
-                << emailToSend.priority << "|"
-                << emailToSend.spamStatus << "\n";
-        outFile.close();
-    } else {
-        std::cerr << "Error opening file for writing." << std::endl;
-    }
-}
-
-// Main function
-int main() {
+class EmailManagementSystem {
+private:
     InboxStack inbox;
     OutboxQueue outbox;
     std::set<int> existingIds;
-    Email latestEmail; // Initialize with a dummy email
+    Email latestEmail;
 
-    // Load emails from dummy_emails.txt into inbox and outbox
-    loadEmailsFromFile("../Data/dummy_emails.txt", inbox, outbox, existingIds, latestEmail);
-
-    // Display the latest email loaded
-    if (latestEmail.id != 0) { // Check if a valid email was found
-        std::cout << "Latest Email:\n";
-        std::cout << "ID: " << latestEmail.id << "\nSender: " << latestEmail.sender 
-                  << "\nReceiver: " << latestEmail.receiver 
-                  << "\nSubject: " << latestEmail.subject 
-                  << "\nBody: " << latestEmail.body 
-                  << "\nTimestamp: " << latestEmail.timestamp 
-                  << "\nStatus: " << latestEmail.status 
-                  << "\nPriority: " << latestEmail.priority 
-                  << "\nSpam Status: " << latestEmail.spamStatus << "\n";
-    } else {
-        std::cout << "No emails available." << std::endl;
+    // Private helper method to get current timestamp
+    std::string getCurrentTimestamp() {
+        time_t now = time(0);
+        tm* localtm = localtime(&now);
+        char buffer[20];
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M", localtm);
+        return std::string(buffer);
     }
 
-    char mainChoice;
+    // Helper method to display email details
+    void displayEmail(const Email& email) {
+        std::cout << "ID: " << email.id << "\nSender: " << email.sender 
+                  << "\nReceiver: " << email.receiver 
+                  << "\nSubject: " << email.subject 
+                  << "\nBody: " << email.body 
+                  << "\nTimestamp: " << email.timestamp 
+                  << "\nStatus: " << email.status 
+                  << "\nPriority: " << email.priority 
+                  << "\nSpam Status: " << email.spamStatus << "\n";
+    }
+
+    // Save email to file
+    void saveEmailToFile(const Email& email) {
+        std::ofstream outFile("../Data/dummy_emails.txt", std::ios::app);
+        if (outFile.is_open()) {
+            outFile << email.id << "|"
+                    << email.sender << "|"
+                    << email.receiver << "|"
+                    << email.subject << "|"
+                    << email.body << "|"
+                    << email.timestamp << "|"
+                    << email.status << "|"
+                    << email.priority << "|"
+                    << email.spamStatus << "\n";
+            outFile.close();
+        } else {
+            std::cerr << "Error opening file for writing." << std::endl;
+        }
+    }
+
+public:
+    // Constructor
+    EmailManagementSystem() {
+        loadEmailsFromFile("../Data/dummy_emails.txt");
+        displayLatestEmail();
+    }
+
+    // Load emails from file
+    void loadEmailsFromFile(const std::string& filename) {
+        std::ifstream inFile(filename);
+        if (!inFile.is_open()) {
+            std::cerr << "Error opening file: " << filename << std::endl;
+            return;
+        }
+        
+        std::string line;
+        while (std::getline(inFile, line)) {
+            Email email;
+            std::istringstream ss(line);
+            std::string temp;
+            
+            std::getline(ss, temp, '|');
+            email.id = std::stoi(temp);
+            std::getline(ss, email.sender, '|');
+            std::getline(ss, email.receiver, '|');
+            std::getline(ss, email.subject, '|');
+            std::getline(ss, email.body, '|');
+            std::getline(ss, email.timestamp, '|');
+            std::getline(ss, email.status, '|');
+            std::getline(ss, temp, '|');
+            email.priority = std::stoi(temp);
+            std::getline(ss, email.spamStatus, '|');
+            
+            existingIds.insert(email.id);
+
+            if (email.id > latestEmail.id) {
+                latestEmail = email;
+            }
+            
+            if (email.status == "Received") {
+                inbox.push(email);
+            } else if (email.status == "Sent") {
+                outbox.enqueue(email);
+            }
+        }
+        inFile.close();
+        std::cout << "Emails loaded from " << filename << "." << std::endl << std::endl;
+    }
+
+    // Display the latest email
+    void displayLatestEmail() {
+        if (latestEmail.id != 0) {
+            std::cout << "Latest Email:\n";
+            displayEmail(latestEmail);
+        } else {
+            std::cout << "No emails available." << std::endl;
+        }
+        std::cout << std::endl; // Adding a blank line
+    }
+
+    // Send email method
+    void sendEmail() {
+        Email emailToSend;
+        emailToSend.id = existingIds.empty() ? 1 : *existingIds.rbegin() + 1;
+        std::cout << "Email ID Assigned: " << emailToSend.id << std::endl;
+
+        // Skip sender as it will be set by other code
+        // emailToSend.sender = ""; // Empty string, will be filled by other code
+        
+        std::cout << "Enter Receiver: ";
+        std::getline(std::cin, emailToSend.receiver);
+        std::cout << "Enter Subject: ";
+        std::getline(std::cin, emailToSend.subject);
+        std::cout << "Enter Body: ";
+        std::getline(std::cin, emailToSend.body);
+        
+        emailToSend.timestamp = getCurrentTimestamp();
+        emailToSend.status = "Sent";
+        
+        do {
+            std::cout << "Enter Priority (1-5): ";
+            std::cin >> emailToSend.priority;
+            std::cin.ignore();
+            if (emailToSend.priority < 1 || emailToSend.priority > 5) {
+                std::cout << "Warning: Priority must be between 1 and 5." << std::endl;
+            }
+        } while (emailToSend.priority < 1 || emailToSend.priority > 5);
+
+        // Skip spam status as it will be determined by SpamDetection
+        // emailToSend.spamStatus = ""; // Empty string, will be filled by SpamDetection
+
+        outbox.enqueue(emailToSend);
+        std::cout << "Email added to the outbox." << std::endl;
+        existingIds.insert(emailToSend.id);
+
+        std::ofstream outFile("../Data/dummy_emails.txt", std::ios::app);
+        if (outFile.is_open()) {
+            outFile << emailToSend.id << "|"
+                    << emailToSend.sender << "|"
+                    << emailToSend.receiver << "|"
+                    << emailToSend.subject << "|"
+                    << emailToSend.body << "|"
+                    << emailToSend.timestamp << "|"
+                    << emailToSend.status << "|"
+                    << emailToSend.priority << "|"
+                    << emailToSend.spamStatus << "\n";
+            outFile.close();
+        } else {
+            std::cerr << "Error opening file for writing." << std::endl;
+        }
+    }
+
+    // Inbox management method
+    void handleInboxManagement() {
+        int inboxChoice;
+        do {
+            std::cout << "\nInbox Management:\n"
+                    << "1. Pop top email\n"
+                    << "2. View current top email\n"
+                    << "3. Back to main menu\n"
+                    << "Enter your choice (1-3): ";
+            std::cin >> inboxChoice;
+            std::cin.ignore();
+            std::cout << std::endl; // Blank line for readability
+
+            switch (inboxChoice) {
+                case 1: // Pop top email
+                    if (!inbox.isEmpty()) {
+                        Email poppedEmail = inbox.pop();
+                        std::cout << "Popped Email:\n";
+                        displayEmail(poppedEmail);
+                    } else {
+                        std::cout << "Inbox is empty. No email to pop.\n\n";
+                    }
+                    break;
+                case 2: // View current top email
+                    if (!inbox.isEmpty()) {
+                        inbox.displayTop();
+                    } else {
+                        std::cout << "Inbox is empty.\n\n";
+                    }
+                    break;
+                case 3: // Back to main menu
+                    std::cout << "Returning to main menu...\n\n";
+                    break;
+                default:
+                    std::cout << "Invalid option. Please choose a number between 1 and 3.\n\n";
+                    break;
+            }
+        } while (inboxChoice != 3);
+    }
+
+    // Outbox management method
+    void handleOutboxManagement() {
+        int outboxChoice;
+        do {
+            std::cout << "\nOutbox Management:\n"
+                    << "1. Enqueue new email\n"
+                    << "2. Dequeue email to send\n"
+                    << "3. View front email\n"
+                    << "4. Back to main menu\n"
+                    << "Enter your choice (1-4): ";
+            std::cin >> outboxChoice;
+            std::cin.ignore();
+            std::cout << std::endl; // Blank line for readability
+
+            switch (outboxChoice) {
+                case 1: // Enqueue new email
+                    sendEmail();
+                    break;
+                case 2: // Dequeue email to send
+                    if (!outbox.isEmpty()) {
+                        Email sentEmail = outbox.dequeue();
+                        std::cout << "Sent Email:\n";
+                        displayEmail(sentEmail);
+                    } else {
+                        std::cout << "Outbox is empty. No email to send.\n\n";
+                    }
+                    break;
+                case 3: // View front email
+                    if (!outbox.isEmpty()) {
+                        outbox.displayFront();
+                    } else {
+                        std::cout << "Outbox is empty.\n\n";
+                    }
+                    break;
+                case 4: // Back to main menu
+                    std::cout << "Returning to main menu...\n\n";
+                    break;
+                default:
+                    std::cout << "Invalid option. Please choose a number between 1 and 4.\n\n";
+                    break;
+            }
+        } while (outboxChoice != 4);
+    }
+};
+
+// Main function
+int main() {
+    EmailManagementSystem emailSystem;
+    
+    int mainChoice;
     do {
         std::cout << "\nChoose an option:\n"
-                  << "(I)nbox Management\n"
-                  << "(O)utbox Management\n"
-                  << "(E)xit\n";
+          << "1. Inbox Management\n"
+          << "2. Outbox Management\n"
+          << "3. Exit\n"
+          << "Enter your choice (1-3): ";
         std::cin >> mainChoice;
-        std::cin.ignore(); // Ignore newline after choice input
+        std::cin.ignore();
+        std::cout << std::endl; // Adding a blank line after input
 
         switch (mainChoice) {
-            case 'I': case 'i': {
-                char inboxChoice;
-                do {
-                    std::cout << "\nInbox Management:\n"
-                              << "(P)op top email\n"
-                              << "(V)iew current top email\n"
-                              << "(B)ack to main menu\n";
-                    std::cin >> inboxChoice;
-                    std::cin.ignore(); // Ignore newline after choice input
-
-                    switch (inboxChoice) {
-                        case 'P': case 'p':
-                            if (!inbox.isEmpty()) {
-                                Email latestEmail = inbox.pop();
-                                std::cout << "Popped Email:\n";
-                                // Display popped email details
-                                std::cout << "ID: " << latestEmail.id << "\nSender: " << latestEmail.sender 
-                                          << "\nReceiver: " << latestEmail.receiver 
-                                          << "\nSubject: " << latestEmail.subject 
-                                          << "\nBody: " << latestEmail.body 
-                                          << "\nTimestamp: " << latestEmail.timestamp 
-                                          << "\nStatus: " << latestEmail.status 
-                                          << "\nPriority: " << latestEmail.priority 
-                                          << "\nSpam Status: " << latestEmail.spamStatus << "\n";
-                            } else {
-                                std::cout << "Inbox is empty. No email to pop." << std::endl;
-                            }
-                            break;
-                        case 'V': case 'v':
-                            if (!inbox.isEmpty()) {
-                                inbox.displayTop();
-                            } else {
-                                std::cout << "Inbox is empty." << std::endl;
-                            }
-                            break;
-                        case 'B': case 'b':
-                            std::cout << "Returning to main menu..." << std::endl;
-                            break;
-                        default:
-                            std::cout << "Invalid option. Please choose again." << std::endl;
-                            break;
-                    }
-                } while (inboxChoice != 'B' && inboxChoice != 'b');
+            case 1: // Inbox Management
+                emailSystem.handleInboxManagement();
                 break;
-            }
-            case 'O': case 'o': {
-                char outboxChoice;
-                do {
-                    std::cout << "\nOutbox Management:\n"
-                            << "(E)nqueue new email\n"
-                            << "(D)equeue email to send\n"
-                            << "(V)iew front email\n"
-                            << "(B)ack to main menu\n";
-                    std::cin >> outboxChoice;
-                    std::cin.ignore(); // Ignore newline after choice input
-
-                    switch (outboxChoice) {
-                        case 'E': case 'e':
-                            sendEmail(outbox, existingIds, inbox); // Pass inbox as well
-                            break;
-                        case 'D': case 'd':
-                            if (!outbox.isEmpty()) {
-                                Email sentEmail = outbox.dequeue();
-                                std::cout << "Sent Email:\n";
-                                // Display sent email details including status, priority, and spam status
-                                std::cout << "ID: " << sentEmail.id << "\nSender: " << sentEmail.sender 
-                                        << "\nReceiver: " << sentEmail.receiver 
-                                        << "\nSubject: " << sentEmail.subject 
-                                        << "\nBody: " << sentEmail.body 
-                                        << "\nTimestamp: " << sentEmail.timestamp 
-                                        << "\nStatus: " << sentEmail.status 
-                                        << "\nPriority: " << sentEmail.priority 
-                                        << "\nSpam Status: " << sentEmail.spamStatus << "\n";
-                            } else {
-                                std::cout << "Outbox is empty. No email to send." << std::endl;
-                            }
-                            break;
-                        case 'V': case 'v':
-                            if (!outbox.isEmpty()) {
-                                outbox.displayFront();
-                            } else {
-                                std::cout << "Outbox is empty." << std::endl;
-                            }
-                            break;
-                        case 'B': case 'b':
-                            std::cout << "Returning to main menu..." << std::endl;
-                            break;
-                        default:
-                            std::cout << "Invalid option. Please choose again." << std::endl;
-                            break;
-                    }
-                } while (outboxChoice != 'B' && outboxChoice != 'b');
+            case 2: // Outbox Management
+                emailSystem.handleOutboxManagement();
                 break;
-            }
-            case 'E': case 'e':
+            case 3: // Exit
                 std::cout << "Exiting program..." << std::endl;
                 break;
             default:
-                std::cout << "Invalid option. Please choose again." << std::endl;
+                std::cout << "Invalid option. Please choose a number between 1 and 3." << std::endl;
                 break;
         }
-    } while (mainChoice != 'E' && mainChoice != 'e');
+    } while (mainChoice != 3);
 
     return 0;
 }
