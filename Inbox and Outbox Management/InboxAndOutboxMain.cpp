@@ -8,7 +8,7 @@
 #include "InboxStack.h"
 #include "OutboxQueue.h"
 
-class EmailManagementSystem {
+class InboxandOutboxManagement {
 private:
     InboxStack inbox;
     OutboxQueue outbox;
@@ -57,7 +57,7 @@ private:
 
 public:
     // Constructor
-    EmailManagementSystem() {
+    InboxandOutboxManagement() {
         loadEmailsFromFile("../Data/dummy_emails.txt");
         displayLatestEmail();
     }
@@ -254,7 +254,7 @@ public:
 
 // Main function
 int main() {
-    EmailManagementSystem emailSystem;
+    InboxandOutboxManagement emailSystem;
     
     int mainChoice;
     do {
