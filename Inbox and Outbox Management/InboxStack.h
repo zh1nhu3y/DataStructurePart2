@@ -15,6 +15,18 @@ struct Email {
     std::string status;
     int priority;
     std::string spamStatus;
+
+    // Add constructor to match usage in SpamDetection.h
+    Email(int _id, const std::string& _sender, const std::string& _receiver,
+          const std::string& _subject, const std::string& _body, 
+          const std::string& _timestamp, const std::string& _status,
+          int _priority, const std::string& _spamStatus = "No")
+        : id(_id), sender(_sender), receiver(_receiver), subject(_subject),
+          body(_body), timestamp(_timestamp), status(_status),
+          priority(_priority), spamStatus(_spamStatus) {}
+    
+    // Default constructor for when we need to create an Email without parameters
+    Email() : id(0), priority(0), spamStatus("No") {}
 };
 
 // Node structure for the linked list

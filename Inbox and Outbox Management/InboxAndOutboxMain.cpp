@@ -64,7 +64,7 @@ void loadEmailsFromFile(const std::string& filename, InboxStack& inbox, OutboxQu
 void sendEmail(OutboxQueue& outbox, std::set<int>& existingIds, InboxStack& inbox) {
     Email emailToSend;
 
-    // Set the next available Email ID
+    // Set the next available Email ID based on the highest value in existingIds
     emailToSend.id = existingIds.empty() ? 1 : *existingIds.rbegin() + 1;
 
     std::cout << "Email ID Assigned: " << emailToSend.id << std::endl;
@@ -98,10 +98,24 @@ void sendEmail(OutboxQueue& outbox, std::set<int>& existingIds, InboxStack& inbo
     std::cout << "Enter Spam Status (Yes/No): ";
     std::getline(std::cin, emailToSend.spamStatus);
 
+    // Ensure the spam status is capitalized
+    std::transform(emailToSend.spamStatus.begin(), emailToSend.spamStatus.end(), emailToSend.spamStatus.begin(), ::tolower);
+
+    // Convert to "Yes" or "No"
+    if (emailToSend.spamStatus == "yes") {
+        emailToSend.spamStatus = "Yes";
+    } else if (emailToSend.spamStatus == "no") {
+        emailToSend.spamStatus = "No";
+    } else {
+        std::cout << "Invalid spam status. Please enter 'Yes' or 'No'.\n";
+        return;
+    }
+
     // Enqueue the email into the outbox if the status is 'Sent'
     if (emailToSend.status == "Sent") {
         outbox.enqueue(emailToSend);
         std::cout << "Email added to the outbox." << std::endl;
+        existingIds.insert(emailToSend.id);  // Add the newly assigned ID to existingIds set
     } 
     // Push to inbox if the status is 'Received'
     else if (emailToSend.status == "Received") {
@@ -132,7 +146,7 @@ int main() {
     InboxStack inbox;
     OutboxQueue outbox;
     std::set<int> existingIds;
-    Email latestEmail = {0}; // Initialize with a dummy email
+    Email latestEmail; // Initialize with a dummy email
 
     // Load emails from dummy_emails.txt into inbox and outbox
     loadEmailsFromFile("../Data/dummy_emails.txt", inbox, outbox, existingIds, latestEmail);

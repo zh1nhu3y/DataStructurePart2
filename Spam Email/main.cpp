@@ -1,8 +1,13 @@
+#include <iostream>
+#include <string>
 #include "spamDetection.h"
+#include "/Users/elvin/Documents/GitHub/DataStructurePart2/Inbox and Outbox Management/OutboxQueue.h"
+
+using namespace std;
 
 int main()
 {
-    EmailQueue emailQueue;
+    OutboxQueue outboxQueue; // Use OutboxQueue instead of EmailQueue
     SpamDetection spamDetection;
     string spamWords[MAX_SPAM_WORDS];
 
@@ -16,10 +21,8 @@ int main()
     // Sort spam words for binary search
     spamDetection.quickSort(spamWords, 0, spamWordCount - 1);
 
-    // Load email from email file
-    spamDetection.enqueueEmail(emailFile, emailQueue);
-
-    // spamDetection.checkSpamStatus(emailQueue, spamWords, spamWordCount, emailFile); // Run once and remove
+    // Load emails from email file into OutboxQueue
+    spamDetection.checkAllEmailsInOutbox(outboxQueue, spamWords, spamWordCount, emailFile);
 
     int choice, id;
 
@@ -36,17 +39,17 @@ int main()
         switch (choice)
         {
         case 1:
-            spamDetection.displaySpamEmails(emailQueue); // Pass emailQueue
+            spamDetection.displaySpamEmails(outboxQueue); // Pass OutboxQueue
             break;
         case 2:
             cout << "Enter Email ID to mark as spam: ";
             cin >> id;
-            spamDetection.markAsSpam(emailQueue, id, emailFile); // Pass emailQueue and id
+            spamDetection.markAsSpam(outboxQueue, id, emailFile); // Pass OutboxQueue and id
             break;
         case 3:
             cout << "Enter Email ID to unmark as spam: ";
             cin >> id;
-            spamDetection.unmarkAsSpam(emailQueue, id, emailFile); // Pass emailQueue and id
+            spamDetection.unmarkAsSpam(outboxQueue, id, emailFile); // Pass OutboxQueue and id
             break;
         case 4:
             cout << "Exiting..." << endl;

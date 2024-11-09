@@ -3,23 +3,62 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <fstream>
 #include "InboxStack.h" // Include InboxStack for Email struct
 
-// Node structure for the queue linked list
-struct QueueNode {
-    Email email;
-    QueueNode* next; // Pointer to the next node
+// Node structure for the linked list of emails within one QueueNode
+struct EmailNode {
+    int id;
+    std::string sender;
+    std::string receiver;
+    std::string subject;
+    std::string body;
+    std::string timestamp;
+    std::string status;
+    int priority;
+    std::string spamStatus;
+    EmailNode* next;
 
-    // Constructor for QueueNode
-    QueueNode(const Email& emailData, QueueNode* nextNode = nullptr)
-        : email(emailData), next(nextNode) {}
+    // Modified constructor to match Email constructor and include spamStatus
+    EmailNode(int emailId, const std::string& senderEmail, const std::string& recipientEmail,
+              const std::string& emailSubject, const std::string& emailBody, 
+              const std::string& emailTimestamp, const std::string& emailStatus, 
+              int emailPriority, const std::string& emailSpamStatus = "No")
+        : id(emailId), sender(senderEmail), receiver(recipientEmail), 
+          subject(emailSubject), body(emailBody), timestamp(emailTimestamp), 
+          status(emailStatus), priority(emailPriority), 
+          spamStatus(emailSpamStatus), next(nullptr) {}
 };
 
-// OutboxQueue class using a linked list
+// Node structure for the queue linked list (only one node to store all emails)
+struct QueueNode {
+    EmailNode* emailHead; // Head of linked list for all emails
+    QueueNode* next;      // Pointer to next QueueNode
+
+    // Constructor for QueueNode
+    QueueNode() : emailHead(nullptr), next(nullptr) {}
+
+    // Function to add an email to this QueueNode's email linked list
+    void addEmail(const Email& email) {
+        EmailNode* newNode = new EmailNode(email.id, email.sender, email.receiver, 
+                                        email.subject, email.body, email.timestamp, 
+                                        email.status, email.priority, email.spamStatus);
+        if (!emailHead) {
+            emailHead = newNode;
+        } else {
+            EmailNode* temp = emailHead;
+            while (temp->next) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+};
+
+// OutboxQueue class using a single QueueNode
 class OutboxQueue {
 private:
-    QueueNode* front; // Pointer to the front of the queue
-    QueueNode* rear;  // Pointer to the rear of the queue
+    QueueNode* front; // Front of the queue (first QueueNode)
 
 public:
     OutboxQueue();
@@ -29,27 +68,51 @@ public:
     Email dequeue();
     bool isEmpty() const;
     void displayFront() const;
+
+    void saveToFile(const std::string& filename) {
+        std::ofstream file(filename);
+        if (!file.is_open()) {
+            std::cout << "Error: Unable to open file for writing." << std::endl;
+            return;
+        }
+
+        EmailNode* current = front->emailHead;
+        while (current != nullptr) {
+            file << current->id << "|"
+                 << current->sender << "|"
+                 << current->receiver << "|"
+                 << current->subject << "|"
+                 << current->body << "|"
+                 << current->timestamp << "|"
+                 << current->status << "|"
+                 << current->priority << "|"
+                 << current->spamStatus << "\n";
+            current = current->next;
+        }
+        file.close();
+        std::cout << "Queue saved to file successfully!" << std::endl;
+    }
+
+    // Method to get the first email node (to be used by SpamDetection)
+    EmailNode* getFront() const {
+        return front->emailHead;  // Returns the first email node
+    }
 };
 
 // Constructor
-OutboxQueue::OutboxQueue() : front(nullptr), rear(nullptr) {}
+OutboxQueue::OutboxQueue() : front(new QueueNode) {}
 
 // Destructor
 OutboxQueue::~OutboxQueue() {
     while (!isEmpty()) {
         dequeue();
     }
+    delete front;
 }
 
 // Enqueue method
 void OutboxQueue::enqueue(const Email& email) {
-    QueueNode* newNode = new QueueNode(email); // Create new node
-    if (isEmpty()) {
-        front = rear = newNode; // First element in queue
-    } else {
-        rear->next = newNode; // Link new node at the end
-        rear = newNode; // Update rear to new node
-    }
+    front->addEmail(email);
 }
 
 // Dequeue method
@@ -58,40 +121,40 @@ Email OutboxQueue::dequeue() {
         throw std::runtime_error("Queue is empty. Cannot dequeue.");
     }
 
-    QueueNode* temp = front; // Store the current front node
-    Email email = front->email; // Get the email from the front node
-    front = front->next; // Move front pointer to the next node
-
-    if (front == nullptr) {
-        rear = nullptr; // Queue is now empty
-    }
-
-    delete temp; // Free memory
-    return email; // Return the email
+    EmailNode* temp = front->emailHead;
+    // Include spamStatus in the email initialization
+    Email email (temp->id, temp->sender, temp->receiver, temp->subject, 
+                  temp->body, temp->timestamp, temp->status, temp->priority, 
+                  temp->spamStatus);  // Add spamStatus here
+    front->emailHead = temp->next;
+    delete temp;
+    return email;
 }
 
 // Check if the queue is empty
 bool OutboxQueue::isEmpty() const {
-    return front == nullptr;
+    return front->emailHead == nullptr;
 }
 
-// Display the front email
+// Display the front email (only the first email in the list)
 void OutboxQueue::displayFront() const {
     if (isEmpty()) {
         std::cout << "No emails in the outbox." << std::endl;
         return;
     }
-    const Email& frontEmail = front->email; // Reference to the front email
+
+    // Access the first email node (no need to access a non-existent 'email' member)
+    EmailNode* frontEmailNode = front->emailHead; // Reference to the first email node in the queue
     std::cout << "Front Email:\n"
-              << "ID: " << frontEmail.id << "\n"
-              << "Sender: " << frontEmail.sender << "\n"
-              << "Receiver: " << frontEmail.receiver << "\n"
-              << "Subject: " << frontEmail.subject << "\n"
-              << "Body: " << frontEmail.body << "\n"
-              << "Timestamp: " << frontEmail.timestamp << "\n"
-              << "Status: " << frontEmail.status << "\n"
-              << "Priority: " << frontEmail.priority << "\n"
-              << "Spam Status: " << frontEmail.spamStatus << std::endl;
+              << "ID: " << frontEmailNode->id << "\n"
+              << "Sender: " << frontEmailNode->sender << "\n"
+              << "Receiver: " << frontEmailNode->receiver << "\n"
+              << "Subject: " << frontEmailNode->subject << "\n"
+              << "Body: " << frontEmailNode->body << "\n"
+              << "Timestamp: " << frontEmailNode->timestamp << "\n"
+              << "Status: " << frontEmailNode->status << "\n"
+              << "Priority: " << frontEmailNode->priority << "\n"
+              << "Spam Status: " << frontEmailNode->spamStatus << std::endl;
 }
 
 #endif // OUTBOXQUEUE_H
