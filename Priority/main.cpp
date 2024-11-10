@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void displayMenu() {
+void displayPriorityMenu() {
     cout << "\n--- Email System Menu ---\n";
     cout << "1. Display emails by priority\n";
     cout << "2. Edit email priority\n";
@@ -23,7 +23,7 @@ int main() {
     bool running = true;
 
     while (running) {
-        displayMenu();
+        displayPriorityMenu();
         cin >> choice;
 
         switch (choice) {
