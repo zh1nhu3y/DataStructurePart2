@@ -1,7 +1,8 @@
-/**
- *  spamDetection.h
- */
-#include "emailQueue.h"
+#ifndef SPAMDETECTION_H
+#define SPAMDETECTION_H
+
+#include "/Users/elvin/Documents/GitHub/DataStructurePart2/Inbox and Outbox Management/OutboxQueue.h"
+#include "/Users/elvin/Documents/GitHub/DataStructurePart2/Inbox and Outbox Management/InboxStack.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,8 +13,7 @@ using namespace std;
 
 const int MAX_SPAM_WORDS = 100;
 
-class SpamDetection
-{
+class SpamDetection {
 public:
     // Loads spam words from a file into an array
     int loadSpamWords(const string &filename, string spamWords[], int maxWords)
@@ -25,7 +25,6 @@ public:
         if (file.is_open())
         {
             string word;
-            // Read each word and store it in the array
             while (file >> word && count < maxWords)
             {
                 spamWords[count++] = word;
@@ -34,12 +33,12 @@ public:
         }
         else
         {
-            cout << "Error to open file." << endl;
+            cout << "Error opening spam words file." << endl;
         }
         return count;
     }
 
-    // Function to swap two elements
+    // Function to swap two elements (used in sorting)
     void swap(string &a, string &b)
     {
         string temp = a;
@@ -50,44 +49,42 @@ public:
     // Partition function for quick sort
     int partition(string spamWords[], int low, int high)
     {
-        string pivot = spamWords[high]; // Select the last element as pivot
+        string pivot = spamWords[high];
         int i = low - 1;
         for (int j = low; j < high; j++)
         {
-            // Place smaller elements to the left of the pivot
             if (spamWords[j] < pivot)
             {
                 i++;
                 swap(spamWords[i], spamWords[j]);
             }
         }
-        swap(spamWords[i + 1], spamWords[high]); // Place pivot in correct position
+        swap(spamWords[i + 1], spamWords[high]);
         return i + 1;
     }
 
-    // Quick Sort function to sort spam words file
+    // Quick Sort function to sort spam words array
     void quickSort(string spamWords[], int low, int high)
     {
         if (low < high)
         {
             int pi = partition(spamWords, low, high);
-            quickSort(spamWords, low, pi - 1);  // Sort elements before pivot
-            quickSort(spamWords, pi + 1, high); // Sort elements after pivot
+            quickSort(spamWords, low, pi - 1);
+            quickSort(spamWords, pi + 1, high);
         }
     }
 
-    // Binary search function to check if a word exists in the spam words list
+    // Binary search function to check if a word is a spam word
     bool binarySearch(const string &word, string spamWords[], int n)
     {
         int left = 0;
         int right = n - 1;
-
         while (left <= right)
         {
             int mid = left + (right - left) / 2;
             if (spamWords[mid] == word)
             {
-                return true; // Spam word found
+                return true;
             }
             else if (spamWords[mid] < word)
             {
@@ -98,133 +95,163 @@ public:
                 right = mid - 1;
             }
         }
-        return false; // Spam word not found
+        return false;
     }
 
-    // Enqueue all email from file
-    void enqueueEmail(const string &filename, EmailQueue &emailQueue)
-    {
+    // Enqueue all emails from file into the OutboxQueue
+    void enqueueEmail(const string &filename, OutboxQueue &outboxQueue) {
         cout << "Loading Emails from File." << endl;
         ifstream emailFile(filename);
         string line;
 
-        if (!emailFile.is_open())
-        {
-            cout << "Error opening file." << endl;
+        if (!emailFile.is_open()) {
+            cout << "Error opening email file." << endl;
             return;
         }
 
-        while (getline(emailFile, line))
-        {
+        while (getline(emailFile, line)) {
             stringstream ss(line);
-            string idStr, senderEmail, recipientEmail, title, content, dateTime, status, priorityStr, spamStatus;
+            string idStr, sender, receiver, subject, body, timestamp, status, priorityStr, spamStatus;
             int id, priority;
 
-            // Parse each field based on the new file format
             getline(ss, idStr, '|');
-            getline(ss, senderEmail, '|');
-            getline(ss, recipientEmail, '|');
-            getline(ss, title, '|');
-            getline(ss, content, '|');
-            getline(ss, dateTime, '|');
+            getline(ss, sender, '|');
+            getline(ss, receiver, '|');
+            getline(ss, subject, '|');
+            getline(ss, body, '|');
+            getline(ss, timestamp, '|');
             getline(ss, status, '|');
             getline(ss, priorityStr, '|');
             getline(ss, spamStatus, '|');
 
-            try
-            {
+            try {
                 id = stoi(idStr);
                 priority = stoi(priorityStr);
             }
-            catch (const std::invalid_argument &e)
-            {
-                cout << "Invalid argument for id or priority. Setting id and priority to 0." << endl;
+            catch (const std::invalid_argument &e) {
+                cout << "Invalid ID or priority. Setting to 0." << endl;
                 id = 0;
                 priority = 0;
             }
 
-            emailQueue.enqueue(id, senderEmail, recipientEmail, title, content, dateTime, status, priority, spamStatus);
+            // Create Email object with all parameters including spamStatus
+            Email email(id, sender, receiver, subject, body, timestamp, status, 
+                       priority, spamStatus.empty() ? "No" : spamStatus);
+            outboxQueue.enqueue(email);
         }
         emailFile.close();
     }
 
-    // WILL REMOVE LATER: Update spam status for all emails (ONLY USED ONCE FOR DUMMY DATA)
-    // void checkSpamStatus(EmailQueue &emailQueue, string spamWords[], int spamWordCount, const string &filename)
-    // {
-    //     EmailNode *current = emailQueue.getFront();
-    //     while (current != nullptr)
-    //     {
-    //         checkSingleEmail(current, spamWords, spamWordCount);
-    //         current = current->next;
-    //     }
-    //     emailQueue.saveToFile(filename);
-    // }
+    void checkAllEmailsInOutbox(OutboxQueue& outboxQueue, string spamWords[], int spamWordCount, const string& emailFile) {
+        // First, clear the existing queue
+        while (!outboxQueue.isEmpty()) {
+            outboxQueue.dequeue();
+        }
 
-    // void checkSingleEmail(EmailNode *email, string spamWords[], int spamWordCount)
-    // {
-    //     stringstream contentStream(email->content);
-    //     string word;
-    //     bool isSpam = false;
-    //     while (contentStream >> word)
-    //     {
-    //         if (binarySearch(word, spamWords, spamWordCount))
-    //         {
-    //             isSpam = true;
-    //             break;
-    //         }
-    //     }
-    //     email->spamStatus = isSpam ? "Yes" : "No";
-    // }
+        // Load emails and check each for spam
+        cout << "Checking emails for spam content..." << endl;
+        
+        // Load all emails into the queue
+        enqueueEmail(emailFile, outboxQueue);
+        
+        // Create a temporary queue to store processed emails
+        OutboxQueue tempQueue;
+        int spamCount = 0;
+        int nonSpamCount = 0;
+        
+        // Process each email in the queue
+        while (!outboxQueue.isEmpty()) {
+            EmailNode* currentEmail = outboxQueue.getFront();
+            if (currentEmail != nullptr) {
+                // Create a copy of the current email
+                EmailNode* emailCopy = new EmailNode(
+                    currentEmail->id,
+                    currentEmail->sender,
+                    currentEmail->receiver,
+                    currentEmail->subject,
+                    currentEmail->body,
+                    currentEmail->timestamp,
+                    currentEmail->status,
+                    currentEmail->priority,
+                    currentEmail->spamStatus
+                );
+                
+                // Check this email for spam and add to temp queue
+                checkSingleEmailAndAppend(emailCopy, spamWords, spamWordCount, tempQueue, emailFile);
+                
+                // Count the spam and non-spam emails
+                if (emailCopy->spamStatus == "Yes") {
+                    spamCount++;
+                } else {
+                    nonSpamCount++;
+                }
 
-    // Check spam for a single email
-    // THIS PART TO INTEGRATE
-    // 1. add all outbox data in one node
-    // 2. pass the node and queue to this function
-    void checkSingleEmailAndAppend(EmailNode *email, string spamWords[], int spamWordCount, EmailQueue &emailQueue, const string &emailFile)
-    {
-        stringstream contentStream(email->content);
+                delete emailCopy;
+            }
+            outboxQueue.dequeue();
+        }
+        
+        // Move all emails back to the original queue
+        while (!tempQueue.isEmpty()) {
+            EmailNode* front = tempQueue.getFront();
+            if (front != nullptr) {
+                Email email(front->id, front->sender, front->receiver, front->subject,
+                        front->body, front->timestamp, front->status, front->priority,
+                        front->spamStatus);
+                outboxQueue.enqueue(email);
+            }
+            tempQueue.dequeue();
+        }
+
+        // Print a summary after processing all emails
+        cout << "Finished checking all emails for spam content." << endl;
+        cout << "Total spam emails: " << spamCount << endl;
+        cout << "Total non-spam emails: " << nonSpamCount << endl;
+    }
+
+    // Check if a single email is spam and add it to OutboxQueue
+    void checkSingleEmailAndAppend(EmailNode *email, string spamWords[], int spamWordCount, 
+                                 OutboxQueue &outboxQueue, const string &emailFile) {
+        stringstream contentStream(email->body);
         string word;
         bool isSpam = false;
-        while (contentStream >> word)
-        {
-            // Convert word to lowercase
-            transform(word.begin(), word.end(), word.begin(), ::tolower);
 
-            // Remove punctuation from the word
+        while (contentStream >> word) {
+            transform(word.begin(), word.end(), word.begin(), ::tolower);
             word.erase(remove_if(word.begin(), word.end(), ::ispunct), word.end());
 
-            if (binarySearch(word, spamWords, spamWordCount))
-            {
+            if (binarySearch(word, spamWords, spamWordCount)) {
                 isSpam = true;
                 break;
             }
         }
-        email->spamStatus = isSpam ? "Yes" : "No"; // Set spam status
+        email->spamStatus = isSpam ? "Yes" : "No";
 
-        // Enqueue the email
-        emailQueue.enqueue(email->id, email->senderEmail, email->recipientEmail, email->title,
-                           email->content, email->dateTime, email->status, email->priority, email->spamStatus);
+        Email emailToAdd(email->id, email->sender, email->receiver, email->subject,
+                        email->body, email->timestamp, email->status, email->priority,
+                        isSpam ? "Yes" : "No");
+        
+        outboxQueue.enqueue(emailToAdd);
 
-        // Append the email to the file
-        ofstream file(emailFile, ios::app); // Open the file in append mode
-        if (file.is_open())
-        {
-            file << email->id << "|" << email->senderEmail << "|" << email->recipientEmail << "|" << email->title << "|"
-                 << email->content << "|" << email->dateTime << "|" << email->status << "|"
-                 << email->priority << "|" << email->spamStatus << "\n";
+        // Save to file with updated spam status
+        ofstream file(emailFile, ios::app);
+        if (file.is_open()) {
+            file << email->id << "|" << email->sender << "|" << email->receiver << "|"
+                 << email->subject << "|" << email->body << "|" << email->timestamp << "|"
+                 << email->status << "|" << email->priority << "|"
+                 << (isSpam ? "Yes" : "No") << "\n";
             file.close();
-            cout << "Email has been sent, checked for spam, and saved to file successfully!" << endl;
+            // cout << "Email processed for spam and saved successfully!" << endl;
         }
-        else
-        {
+        else {
             cout << "Error: Unable to open file for writing." << endl;
         }
     }
 
     // Function to display all spam emails
-    void displaySpamEmails(EmailQueue &emailQueue)
+    void displaySpamEmails(OutboxQueue &outboxQueue)
     {
-        EmailNode *current = emailQueue.getFront();
+        EmailNode *current = outboxQueue.getFront();
         cout << "Spam Emails:" << endl;
         bool hasSpam = false;
         while (current != nullptr)
@@ -233,11 +260,11 @@ public:
             {
                 hasSpam = true;
                 cout << "ID: " << current->id << endl
-                     << "Sender: " << current->senderEmail << endl
-                     << "Recipient: " << current->recipientEmail << endl
-                     << "Title: " << current->title << endl
-                     << "Content: " << current->content << endl
-                     << "Date: " << current->dateTime << endl
+                     << "Sender: " << current->sender << endl
+                     << "Receiver: " << current->receiver << endl
+                     << "Subject: " << current->subject << endl
+                     << "Body: " << current->body << endl
+                     << "Timestamp: " << current->timestamp << endl
                      << "Priority: " << current->priority << endl
                      << "-----------------------------------" << endl;
             }
@@ -247,17 +274,17 @@ public:
             cout << "No spam emails found." << endl;
     }
 
-    // Function to mark an email as spam and saves the updated queue to file
-    void markAsSpam(EmailQueue &emailQueue, int id, const string &filename)
+    // Mark an email as spam and save the updated queue
+    void markAsSpam(OutboxQueue &outboxQueue, int id, const string &filename)
     {
-        EmailNode *current = emailQueue.getFront();
+        EmailNode *current = outboxQueue.getFront();
         while (current != nullptr)
         {
             if (current->id == id)
             {
-                current->spamStatus = "Yes"; // Mark as spam
-                cout << "Email with ID " << id << " has been marked as spam." << endl;
-                emailQueue.saveToFile(filename); // Save after marking as spam
+                current->spamStatus = "Yes";
+                cout << "Email with ID " << id << " marked as spam." << endl;
+                outboxQueue.saveToFile(filename);
                 return;
             }
             current = current->next;
@@ -265,17 +292,17 @@ public:
         cout << "Email with ID " << id << " not found." << endl;
     }
 
-    // Function to unmark an email as spam and saves the updated queue to file
-    void unmarkAsSpam(EmailQueue &emailQueue, int id, const string &filename)
+    // Unmark an email as spam and save the updated queue
+    void unmarkAsSpam(OutboxQueue &outboxQueue, int id, const string &filename)
     {
-        EmailNode *current = emailQueue.getFront();
+        EmailNode *current = outboxQueue.getFront();
         while (current != nullptr)
         {
             if (current->id == id)
             {
-                current->spamStatus = "No"; // Unmark as spam
-                cout << "Email with ID " << id << " has been unmarked as spam." << endl;
-                emailQueue.saveToFile(filename); // Save after unmarking as spam
+                current->spamStatus = "No";
+                cout << "Email with ID " << id << " unmarked as spam." << endl;
+                outboxQueue.saveToFile(filename);
                 return;
             }
             current = current->next;
@@ -283,3 +310,5 @@ public:
         cout << "Email with ID " << id << " not found." << endl;
     }
 };
+
+#endif // SPAMDETECTION_H
