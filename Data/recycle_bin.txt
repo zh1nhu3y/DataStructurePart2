@@ -1,1 +1,1 @@
-575|fiona.johnson@sample.com|charlie.johnson@demo.com|Meeting Reminder|Here's the latest update on the project. Please review it by end of the week.|2024-10-22 04:49|Sent|1|No
+922|george.davis@example.com|charlie.johnson@demo.com|Feedback Request|Please review the holiday schedule and let us know your availability.|2024-10-20 20:27|Sent|2|No
