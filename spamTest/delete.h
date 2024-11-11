@@ -40,93 +40,6 @@ void removeEmailFromFile(const string& emailFile, int emailID) {
     rename("temp.txt", emailFile.c_str());
 }
 
-
-
-bool deleteEmail(InboxStack& inbox, OutboxQueue& outbox, const string& recycleBinFile, const string& emailFile, const string& currentUser) {
-    int emailID;
-    string input;
-
-    cout << "Enter the ID of the email you want to delete: ";
-    while (true) {
-        getline(cin, input); // Read input as a string
-        stringstream ss(input); // Convert the string to a stream for validation
-
-        if (ss >> emailID) {
-            if (ss.eof()) {  // Ensures that no additional characters are present
-                break; 
-            } else {
-                cout << "Invalid input. Please enter a valid email ID: ";
-            }
-        } else {
-            cout << "Invalid input. Please enter a valid email ID: ";
-        }
-    }
-
-    // Open the recycle bin for appending
-    ofstream recycleBin(recycleBinFile, ios::app);
-    if (!recycleBin.is_open()) {
-        cerr << "Failed to open recycle bin file.\n";
-        return false;
-    }
-
-    // Temporary containers to hold emails
-    InboxStack tempStack;
-    OutboxQueue tempQueue;
-    bool emailFound = false;
-
-    // Delete from inbox (only "received" emails are considered)
-    while (!inbox.isEmpty()) {
-        Email email = inbox.pop();
-        if (email.id == emailID && (email.receiver == currentUser || email.sender == currentUser) && email.status == "Received") {
-            // Write to recycle bin
-            recycleBin << email.id << "|" << email.sender << "|" << email.receiver << "|"
-                       << email.subject << "|" << email.body << "|" << email.timestamp << "|"
-                       << email.status << "|" << email.priority << "|" << email.spamStatus << "\n";
-            emailFound = true;
-            cout << "Email deleted from inbox and moved to recycle bin.\n";
-        } else {
-            tempStack.push(email);
-        }
-    }
-
-    // Restore inbox after deletion
-    while (!tempStack.isEmpty()) {
-        inbox.push(tempStack.pop());
-    }
-
-    // Delete from outbox (only "received" emails are considered)
-    while (!outbox.isEmpty()) {
-        Email email = outbox.dequeue();
-        if (email.id == emailID && (email.receiver == currentUser || email.sender == currentUser) && email.status == "Received") {
-            // Write to recycle bin
-            recycleBin << email.id << "|" << email.sender << "|" << email.receiver << "|"
-                       << email.subject << "|" << email.body << "|" << email.timestamp << "|"
-                       << email.status << "|" << email.priority << "|" << email.spamStatus << "\n";
-            emailFound = true;
-            cout << "Email deleted from outbox and moved to recycle bin.\n";
-        } else {
-            tempQueue.enqueue(email);
-        }
-    }
-
-    // Restore outbox after deletion
-    while (!tempQueue.isEmpty()) {
-        outbox.enqueue(tempQueue.dequeue());
-    }
-
-    // Now, remove the email from dummy_emails.txt
-    if (emailFound) {
-        removeEmailFromFile(emailFile, emailID);
-    }
-
-    recycleBin.close();
-    return emailFound;
-}
-
-
-
-
-
 // Function to save restored email to dummy_emails.txt
 void saveEmailToFile(const string& emailFile, const Email& email) {
     ofstream outFile(emailFile, ios::app);
@@ -150,108 +63,194 @@ void saveEmailToFile(const string& emailFile, const Email& email) {
 }
 
 
-// Function to restore emails from recycle bin in order of email ID (ascending)
-void restoreEmail(InboxStack& inbox, OutboxQueue& outbox, const string& recycleBinFile, const string& emailFile, const string& currentUser) {
+// // Function to restore emails from recycle bin in order of email ID (ascending)
+// void restoreEmail(InboxStack& inbox, OutboxQueue& outbox, const string& recycleBinFile, const string& emailFile, const string& currentUser) {
+//     int emailID;
+//     cout << "Enter the ID of the email you want to restore: ";
+//     cin >> emailID;
+
+//     ifstream infile(recycleBinFile);
+//     ofstream tempFile("temp.txt");
+//     if (!infile.is_open() || !tempFile.is_open()) {
+//         cerr << "Failed to open recycle bin file or temp file.\n";
+//         return;
+//     }
+
+//     string line;
+//     bool emailFound = false;
+//     InboxStack tempStack;
+//     OutboxQueue tempQueue;
+//     string restoredEmailStr;
+
+//     // First, extract all emails from recycle bin and put them in a temporary stack and queue
+//     while (getline(infile, line)) {
+//         stringstream ss(line);
+//         int id;
+//         ss >> id;
+
+//         if (id == emailID) {
+//             emailFound = true;
+//             string sender, receiver, subject, body, timestamp, status, spamStatus;
+//             ss.ignore();  // Skip the '|'
+//             getline(ss, sender, '|');
+//             getline(ss, receiver, '|');
+//             getline(ss, subject, '|');
+//             getline(ss, body, '|');
+//             getline(ss, timestamp, '|');
+//             getline(ss, status, '|');
+//             getline(ss, spamStatus, '|'); // We now ensure spamStatus is correctly read
+
+//             // Create an Email object for the restored email
+//             Email restoredEmail(id, sender, receiver, subject, body, timestamp, status, 0, spamStatus);
+
+//             // Push the restored email into inbox and outbox
+//             inbox.push(restoredEmail);
+//             outbox.enqueue(restoredEmail);
+
+//             // Save restored email to the correct position in the file
+//             restoredEmailStr = std::to_string(id) + "|" + sender + "|" + receiver + "|" + subject + "|" + body + "|" + timestamp + "|" + status + "|" + std::to_string(restoredEmail.priority) + "|" + spamStatus;
+//         } else {
+//             tempFile << line << "\n";  // Keep the other emails
+//         }
+//     }
+
+//     infile.close();
+//     tempFile.close();
+
+//     if (!emailFound) {
+//         cout << "Email not found in the recycle bin.\n";
+//         return;
+//     }
+
+//     // Reopen the original email file to insert the restored email in the correct order
+//     ifstream emailFileIn(emailFile);
+//     ofstream emailFileOut("final_emails.txt");
+//     if (!emailFileIn.is_open() || !emailFileOut.is_open()) {
+//         cerr << "Failed to open email file or final email file.\n";
+//         return;
+//     }
+
+//     string emailLine;
+//     bool emailInserted = false;
+
+//     while (getline(emailFileIn, emailLine)) {
+//         stringstream ss(emailLine);
+//         int id;
+//         ss >> id;
+
+//         if (!emailInserted && id > emailID) {
+//             // Insert restored email before this email with a higher ID
+//             emailFileOut << restoredEmailStr << "\n";
+//             emailInserted = true;
+//         }
+
+//         emailFileOut << emailLine << "\n";
+//     }
+
+//     // If the restored email wasn't inserted, append it at the end
+//     if (!emailInserted) {
+//         emailFileOut << restoredEmailStr << "\n";
+//     }
+
+//     emailFileIn.close();
+//     emailFileOut.close();
+
+//     // Now replace the original email file with the updated file
+//     remove(emailFile.c_str());
+//     rename("final_emails.txt", emailFile.c_str());
+
+//     // Now, remove the restored email from the recycle bin
+//     remove(recycleBinFile.c_str());
+//     rename("temp.txt", recycleBinFile.c_str());
+
+//     cout << "Restored email from recycle bin and updated file.\n";
+// }
+
+#include "InboxStack.h"
+#include "OutboxQueue.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
+void deleteEmail(InboxStack &inbox, OutboxQueue &outbox, const std::string &recycleBinFile, const std::string &emailFile, const std::string &userEmail) {
     int emailID;
-    cout << "Enter the ID of the email you want to restore: ";
-    cin >> emailID;
+    std::cout << "Enter the ID of the email you want to delete: ";
+    std::cin >> emailID;
 
-    ifstream infile(recycleBinFile);
-    ofstream tempFile("temp.txt");
-    if (!infile.is_open() || !tempFile.is_open()) {
-        cerr << "Failed to open recycle bin file or temp file.\n";
-        return;
-    }
+    std::ifstream infile(emailFile);
+    std::ofstream tempFile("temp.txt");
+    std::ofstream recycleFile(recycleBinFile, std::ios::app);
+    std::string line;
+    bool deleted = false;
 
-    string line;
-    bool emailFound = false;
-    InboxStack tempStack;
-    OutboxQueue tempQueue;
-    string restoredEmailStr;
+    while (std::getline(infile, line)) {
+        std::stringstream ss(line);
+        std::string id, sender, receiver, subject, body, timestamp, status, priority, spamStatus;
 
-    // First, extract all emails from recycle bin and put them in a temporary stack and queue
-    while (getline(infile, line)) {
-        stringstream ss(line);
-        int id;
-        ss >> id;
+        std::getline(ss, id, '|');
+        std::getline(ss, sender, '|');
+        std::getline(ss, receiver, '|');
 
-        if (id == emailID) {
-            emailFound = true;
-            string sender, receiver, subject, body, timestamp, status, spamStatus;
-            ss.ignore();  // Skip the '|'
-            getline(ss, sender, '|');
-            getline(ss, receiver, '|');
-            getline(ss, subject, '|');
-            getline(ss, body, '|');
-            getline(ss, timestamp, '|');
-            getline(ss, status, '|');
-            getline(ss, spamStatus, '|'); // We now ensure spamStatus is correctly read
-
-            // Create an Email object for the restored email
-            Email restoredEmail(id, sender, receiver, subject, body, timestamp, status, 0, spamStatus);
-
-            // Push the restored email into inbox and outbox
-            inbox.push(restoredEmail);
-            outbox.enqueue(restoredEmail);
-
-            // Save restored email to the correct position in the file
-            restoredEmailStr = std::to_string(id) + "|" + sender + "|" + receiver + "|" + subject + "|" + body + "|" + timestamp + "|" + status + "|" + std::to_string(restoredEmail.priority) + "|" + spamStatus;
+        // Check if the email ID matches and if the receiver is the user
+        if (std::stoi(id) == emailID && receiver == userEmail) {
+            recycleFile << line << "\n"; // Write to recycle bin
+            deleted = true;
         } else {
-            tempFile << line << "\n";  // Keep the other emails
+            tempFile << line << "\n"; // Keep other emails
         }
     }
 
     infile.close();
     tempFile.close();
+    recycleFile.close();
 
-    if (!emailFound) {
-        cout << "Email not found in the recycle bin.\n";
-        return;
+    if (deleted) {
+        std::remove(emailFile.c_str());
+        std::rename("temp.txt", emailFile.c_str());
+        std::cout << "Email deleted successfully.\n";
+    } else {
+        std::cout << "Error: Email ID not found or not received by you.\n";
     }
+}
 
-    // Reopen the original email file to insert the restored email in the correct order
-    ifstream emailFileIn(emailFile);
-    ofstream emailFileOut("final_emails.txt");
-    if (!emailFileIn.is_open() || !emailFileOut.is_open()) {
-        cerr << "Failed to open email file or final email file.\n";
-        return;
-    }
+void restoreEmail(InboxStack &inbox, OutboxQueue &outbox, const std::string &recycleBinFile, const std::string &emailFile, const std::string &userEmail) {
+    int emailID;
+    std::cout << "Enter the ID of the email you want to restore: ";
+    std::cin >> emailID;
 
-    string emailLine;
-    bool emailInserted = false;
+    std::ifstream recycleFile(recycleBinFile);
+    std::ofstream tempRecycleFile("temp_recycle.txt");
+    std::ofstream emailFileOut(emailFile, std::ios::app);
+    std::string line;
+    bool restored = false;
 
-    while (getline(emailFileIn, emailLine)) {
-        stringstream ss(emailLine);
-        int id;
-        ss >> id;
+    while (std::getline(recycleFile, line)) {
+        std::stringstream ss(line);
+        std::string id;
+        std::getline(ss, id, '|');
 
-        if (!emailInserted && id > emailID) {
-            // Insert restored email before this email with a higher ID
-            emailFileOut << restoredEmailStr << "\n";
-            emailInserted = true;
+        if (std::stoi(id) == emailID) {
+            emailFileOut << line << "\n"; // Restore to emails file
+            restored = true;
+        } else {
+            tempRecycleFile << line << "\n"; // Keep other deleted emails
         }
-
-        emailFileOut << emailLine << "\n";
     }
 
-    // If the restored email wasn't inserted, append it at the end
-    if (!emailInserted) {
-        emailFileOut << restoredEmailStr << "\n";
-    }
-
-    emailFileIn.close();
+    recycleFile.close();
+    tempRecycleFile.close();
     emailFileOut.close();
 
-    // Now replace the original email file with the updated file
-    remove(emailFile.c_str());
-    rename("final_emails.txt", emailFile.c_str());
-
-    // Now, remove the restored email from the recycle bin
-    remove(recycleBinFile.c_str());
-    rename("temp.txt", recycleBinFile.c_str());
-
-    cout << "Restored email from recycle bin and updated file.\n";
+    if (restored) {
+        std::remove(recycleBinFile.c_str());
+        std::rename("temp_recycle.txt", recycleBinFile.c_str());
+        std::cout << "Email restored successfully.\n";
+    } else {
+        std::cout << "Error: Email ID not found in recycle bin.\n";
+    }
 }
+
+
 
 // Function to view deleted emails from recycle bin in FIFO order
 void viewDeletedEmailsFIFO(const std::string& recycleBinFile, const std::string& currentUser) {

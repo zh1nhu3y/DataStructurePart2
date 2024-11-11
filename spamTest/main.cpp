@@ -102,8 +102,6 @@ int main()
             editEmailPriority(inbox, outbox, emailFile, emailID, newPriority);
             break;
         case 6: // Delete Email
-            cout << "Enter the ID of the email you want to delete: ";
-            cin >> emailID;
              deleteEmail(inbox, outbox, "../Data/recycle_bin.txt", "../Data/dummy_emails.txt", userEmail);
             break;
         case 7: // Search Emails by Priority
