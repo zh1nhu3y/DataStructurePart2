@@ -10,7 +10,7 @@
 10|george.smith@sample.com|hannah.wilson@test.com|Urgent: Action Required|This is the weekly status report for the project. Please find the details attached.|2024-10-13 05:12|Sent|1|No
 11|alice.lee@example.com|george.smith@example.com|Software Update Notification|Please review the holiday schedule and let us know your availability.|2024-10-21 14:20|Received|4|No
 12|eva.smith@demo.com|jack.miller@sample.com|Meeting Reminder|Attached is the invoice for your records. Let us know if you have any questions.|2024-10-04 07:55|Received|4|No
-13|charlie.johnson@demo.com|irene.smith@sample.com|Meeting Reminder|This is an urgent request for action on the pending items.|2024-10-05 19:04|Sent|5|Yes
+13|charlie.johnson@demo.com|irene.smith@sample.com|Meeting Reminder|This is an urgent request for action on the pending items.|2024-10-05 19:04|Sent|2|5
 14|charlie.davis@demo.com|eva.brown@example.com|Meeting Reminder|Please review the holiday schedule and let us know your availability.|2024-10-08 05:49|Received|2|No
 15|hannah.taylor@test.com|irene.johnson@demo.com|Holiday Schedule|Important: A new software update is available for installation.|2024-10-15 09:22|Received|2|No
 16|david.johnson@sample.com|hannah.miller@test.com|Meeting Reminder|Please review the holiday schedule and let us know your availability.|2024-10-24 07:09|Sent|3|No
@@ -645,6 +645,7 @@
 646|david.brown@sample.com|irene.johnson@sample.com|Weekly Status Report|Please review the holiday schedule and let us know your availability.|2024-10-12 13:00|Received|3|No
 647|jack.johnson@sample.com|jack.taylor@demo.com|Team Outing Details|Please review the holiday schedule and let us know your availability.|2024-10-17 09:22|Sent|1|No
 648|alice.taylor@test.com|alice.taylor@sample.com|Meeting Reminder|Please review the holiday schedule and let us know your availability.|2024-10-07 09:14|Sent|2|No
+649|charlie.johnson@demo.com|jack.anderson@sample.com|Weekly Status Report|This is an urgent request for action on the pending items.|2024-10-24 22:05|Received|0|3
 650|irene.anderson@test.com|jack.lee@demo.com|Invoice Attached|Please review the holiday schedule and let us know your availability.|2024-10-17 02:37|Sent|2|No
 651|charlie.anderson@demo.com|jack.smith@demo.com|Urgent: Action Required|This is an urgent request for action on the pending items.|2024-10-24 20:27|Sent|2|Yes
 652|charlie.lee@test.com|fiona.anderson@example.com|Meeting Reminder|This is an urgent request for action on the pending items.|2024-10-01 11:20|Sent|5|Yes
@@ -845,6 +846,7 @@
 847|charlie.thomas@test.com|jack.anderson@test.com|Holiday Schedule|Here's the latest update on the project. Please review it by end of the week.|2024-10-23 06:41|Sent|1|No
 848|george.brown@example.com|bob.taylor@demo.com|Team Outing Details|We would appreciate your feedback on our latest product.|2024-10-19 22:27|Received|4|No
 849|fiona.thomas@demo.com|george.thomas@demo.com|Holiday Schedule|Here's the latest update on the project. Please review it by end of the week.|2024-10-24 20:38|Sent|5|No
+850|fiona.smith@demo.com|charlie.johnson@demo.com|Team Outing Details|Attached is the invoice for your records. Let us know if you have any questions.|2024-10-07 10:28|Received|3|No
 851|irene.thomas@example.com|jack.brown@example.com|Project Update|Please be reminded of our meeting tomorrow at 10 AM.|2024-10-05 22:55|Sent|4|No
 852|eva.johnson@demo.com|jack.miller@demo.com|Team Outing Details|Important: A new software update is available for installation.|2024-10-22 10:18|Sent|4|No
 853|george.johnson@test.com|alice.taylor@example.com|Invoice Attached|Important: A new software update is available for installation.|2024-10-26 11:34|Received|1|No
@@ -916,6 +918,7 @@
 919|jack.taylor@example.com|fiona.anderson@sample.com|Feedback Request|This is an urgent request for action on the pending items.|2024-10-24 05:36|Received|5|Yes
 920|jack.anderson@demo.com|fiona.lee@example.com|Feedback Request|Please be reminded of our meeting tomorrow at 10 AM.|2024-10-17 12:05|Sent|5|No
 921|charlie.smith@sample.com|hannah.lee@sample.com|Software Update Notification|We would appreciate your feedback on our latest product.|2024-10-10 10:17|Sent|4|No
+922|george.davis@example.com|charlie.johnson@demo.com|Feedback Request|Please review the holiday schedule and let us know your availability.|2024-10-20 20:27|Sent|2|No
 923|hannah.miller@test.com|david.miller@sample.com|Meeting Reminder|Important: A new software update is available for installation.|2024-10-04 20:44|Sent|1|No
 924|david.wilson@demo.com|charlie.wilson@sample.com|Meeting Reminder|This is the weekly status report for the project. Please find the details attached.|2024-10-13 06:33|Received|4|No
 925|fiona.johnson@sample.com|hannah.thomas@example.com|Software Update Notification|Important: A new software update is available for installation.|2024-10-11 10:27|Received|3|No

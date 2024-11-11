@@ -67,50 +67,6 @@ void displayEmailsByPriority(InboxStack& inbox, OutboxQueue& outbox, const std::
     }
 }
 
-void editEmailPriority(InboxStack& inbox, OutboxQueue& outbox, const string& emailFile, int emailID, int newPriority) {
-    InboxStack tempStack;
-    OutboxQueue tempQueue;
-    bool found = false;
-
-    // Edit inbox emails by priority
-    while (!inbox.isEmpty()) {
-        Email email = inbox.pop();
-        if (email.id == emailID) {
-            email.priority = newPriority;
-            found = true;
-        }
-        tempStack.push(email);
-    }
-
-    // Push remaining inbox emails back to the stack
-    while (!tempStack.isEmpty()) {
-        inbox.push(tempStack.pop());
-    }
-
-    // Edit outbox emails by priority
-    while (!outbox.isEmpty()) {
-        Email email = outbox.dequeue();
-        if (email.id == emailID) {
-            email.priority = newPriority;
-            found = true;
-        }
-        tempQueue.enqueue(email);
-    }
-
-    // Push remaining outbox emails back to the queue
-    while (!tempQueue.isEmpty()) {
-        outbox.enqueue(tempQueue.dequeue());
-    }
-
-    if (found) {
-        std::cout << "Email priority updated successfully.\n";
-        // Now update the file to reflect the new priority
-        updateEmailFile(emailFile, emailID, newPriority);
-    } else {
-        std::cout << "Email not found.\n";
-    }
-}
-
 void updateEmailFile(const string& emailFile, int emailID, int newPriority) {
     std::ifstream emailFileIn(emailFile);
     std::ofstream tempFile("temp.txt");
@@ -163,13 +119,69 @@ void updateEmailFile(const string& emailFile, int emailID, int newPriority) {
     }
 }
 
-void searchEmailsByPriority(InboxStack& inbox, OutboxQueue& outbox, int searchPriority, const std::string& currentUser) {
+void editEmailPriority(InboxStack& inbox, OutboxQueue& outbox, const string& emailFile, int emailID, int newPriority) {
     InboxStack tempStack;
     OutboxQueue tempQueue;
     bool found = false;
-    std::set<int> seenEmails;  // Set to keep track of email IDs we've already printed
 
-    std::cout << "Searching Emails with Priority " << searchPriority << ":\n";
+    // Edit inbox emails by priority
+    while (!inbox.isEmpty()) {
+        Email email = inbox.pop();
+        if (email.id == emailID) {
+            email.priority = newPriority;
+            found = true;
+        }
+        tempStack.push(email);
+    }
+
+    // Push remaining inbox emails back to the stack
+    while (!tempStack.isEmpty()) {
+        inbox.push(tempStack.pop());
+    }
+
+    // Edit outbox emails by priority
+    while (!outbox.isEmpty()) {
+        Email email = outbox.dequeue();
+        if (email.id == emailID) {
+            email.priority = newPriority;
+            found = true;
+        }
+        tempQueue.enqueue(email);
+    }
+
+    // Push remaining outbox emails back to the queue
+    while (!tempQueue.isEmpty()) {
+        outbox.enqueue(tempQueue.dequeue());
+    }
+
+    if (found) {
+        std::cout << "Email priority updated successfully.\n";
+        // Now update the file to reflect the new priority
+        updateEmailFile(emailFile, emailID, newPriority);
+    } else {
+        std::cout << "Email not found.\n";
+    }
+}
+
+
+
+void searchEmailsByPriority(InboxStack& inbox, OutboxQueue& outbox, const string& currentUser) {
+    int searchPriority;
+    cout << "Enter the priority level to search (1-5): ";
+    cin >> searchPriority;
+
+    // Check if the input is within the valid range
+    if (searchPriority < 1 || searchPriority > 5) {
+        cout << "Invalid priority level! Please enter a number between 1 and 5.\n";
+        return;
+    }
+
+    InboxStack tempStack;
+    OutboxQueue tempQueue;
+    bool found = false;
+    set<int> seenEmails;  // Set to keep track of email IDs we've already printed
+
+    cout << "Searching Emails with Priority " << searchPriority << ":\n";
 
     // Search inbox
     while (!inbox.isEmpty()) {
@@ -177,9 +189,9 @@ void searchEmailsByPriority(InboxStack& inbox, OutboxQueue& outbox, int searchPr
         if (email.priority == searchPriority && (email.receiver == currentUser || email.sender == currentUser)) {
             // Check if this email has already been printed (based on email ID)
             if (seenEmails.find(email.id) == seenEmails.end()) {
-                std::cout << "ID: " << email.id << " | From: " << email.sender
-                          << " | To: " << email.receiver << " | Subject: " << email.subject
-                          << " | Date: " << email.timestamp << "\n";
+                cout << "ID: " << email.id << " | From: " << email.sender
+                     << " | To: " << email.receiver << " | Subject: " << email.subject
+                     << " | Date: " << email.timestamp << "\n";
                 found = true;
                 seenEmails.insert(email.id);  // Mark this email as seen
             }
@@ -193,9 +205,9 @@ void searchEmailsByPriority(InboxStack& inbox, OutboxQueue& outbox, int searchPr
         if (email.priority == searchPriority && (email.receiver == currentUser || email.sender == currentUser)) {
             // Check if this email has already been printed (based on email ID)
             if (seenEmails.find(email.id) == seenEmails.end()) {
-                std::cout << "ID: " << email.id << " | From: " << email.sender
-                          << " | To: " << email.receiver << " | Subject: " << email.subject
-                          << " | Date: " << email.timestamp << "\n";
+                cout << "ID: " << email.id << " | From: " << email.sender
+                     << " | To: " << email.receiver << " | Subject: " << email.subject
+                     << " | Date: " << email.timestamp << "\n";
                 found = true;
                 seenEmails.insert(email.id);  // Mark this email as seen
             }
@@ -204,7 +216,7 @@ void searchEmailsByPriority(InboxStack& inbox, OutboxQueue& outbox, int searchPr
     }
 
     if (!found) {
-        std::cout << "No emails found with priority " << searchPriority << ".\n";
+        cout << "No emails found with priority " << searchPriority << ".\n";
     }
 
     // Restore inbox and outbox

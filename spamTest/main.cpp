@@ -107,9 +107,7 @@ int main()
              deleteEmail(inbox, outbox, "../Data/recycle_bin.txt", "../Data/dummy_emails.txt", userEmail);
             break;
         case 7: // Search Emails by Priority
-            cout << "Enter priority level to search: ";
-            cin >> newPriority;
-            searchEmailsByPriority(inbox, outbox, newPriority, userEmail);
+            searchEmailsByPriority(inbox, outbox, userEmail);
             break;
         case 8: // View Deleted Emails
             viewDeletedEmailsFIFO("../Data/recycle_bin.txt", userEmail);
