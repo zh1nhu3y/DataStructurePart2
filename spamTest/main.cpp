@@ -1,5 +1,7 @@
 #include "InboxAndOutboxMain.h"
 #include "spamDetection.h"
+#include "delete.h"
+#include "priority.h"
 
 using namespace std;
 
@@ -13,7 +15,8 @@ int main()
 
     const string spamFile = "../Data/spam_words.txt";
     const string emailFile = "../Data/dummy_emails.txt";
-    const string userEmail = "mj@gmail.com";
+    // const string userEmail = "mj@gmail.com";
+    const string userEmail = "charlie.johnson@demo.com";
 
     emailSystem.loadEmailsFromFile(emailFile, inbox, outbox);
 
@@ -26,15 +29,21 @@ int main()
     // emailSystem.displayLatestEmail();
 
     int mainChoice;
-    int choice, id;
+    int choice, id, emailID, newPriority;
     do
     {
         cout << "\nChoose an option:\n"
              << "1. Inbox Management\n"
              << "2. Outbox Management\n"
              << "3. Spam Management\n"
-             << "4. Exit\n"
-             << "Enter your choice (1-4): ";
+             << "4. View Emails by Priority\n"
+             << "5. Edit Email Priority\n"
+             << "6. Delete Email\n"
+             << "7. Search Emails by Priority\n"
+             << "8. View Deleted Emails\n"
+             << "9. Restore Deleted Email\n"
+             << "10. Exit\n"
+             << "Enter your choice (1-10): ";
         cin >> mainChoice;
         cin.ignore();
         cout << endl;
@@ -82,14 +91,40 @@ int main()
                 }
             } while (choice != 4);
             break;
-        case 4:
+        case 4: // View Emails by Priority
+            displayEmailsByPriority(inbox, outbox, userEmail);
+            break;
+        case 5: // Edit Email Priority
+            cout << "Enter email ID to edit priority: ";
+            cin >> emailID;
+            cout << "Enter new priority: ";
+            cin >> newPriority;
+            editEmailPriority(inbox, outbox, emailFile, emailID, newPriority);
+            break;
+        case 6: // Delete Email
+            cout << "Enter the ID of the email you want to delete: ";
+            cin >> emailID;
+             deleteEmail(inbox, outbox, "../Data/recycle_bin.txt", "../Data/dummy_emails.txt", userEmail);
+            break;
+        case 7: // Search Emails by Priority
+            cout << "Enter priority level to search: ";
+            cin >> newPriority;
+            searchEmailsByPriority(inbox, outbox, newPriority, userEmail);
+            break;
+        case 8: // View Deleted Emails
+            viewDeletedEmailsFIFO("../Data/recycle_bin.txt", userEmail);
+            break;
+        case 9: // Restore Deleted Email
+            restoreEmail(inbox, outbox, "../Data/recycle_bin.txt", emailFile, userEmail);
+            break;
+        case 10:
             cout << "Exiting program...\n";
             break;
         default:
-            cout << "Invalid option. Please choose a number between 1 and 4.\n";
+            cout << "Invalid option. Please choose a number between 1 and 10.\n";
             break;
         }
-    } while (mainChoice != 4);
+    } while (mainChoice != 10);
 
     return 0;
 }

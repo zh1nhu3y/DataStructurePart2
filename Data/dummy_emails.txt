@@ -645,7 +645,6 @@
 646|david.brown@sample.com|irene.johnson@sample.com|Weekly Status Report|Please review the holiday schedule and let us know your availability.|2024-10-12 13:00|Received|3|No
 647|jack.johnson@sample.com|jack.taylor@demo.com|Team Outing Details|Please review the holiday schedule and let us know your availability.|2024-10-17 09:22|Sent|1|No
 648|alice.taylor@test.com|alice.taylor@sample.com|Meeting Reminder|Please review the holiday schedule and let us know your availability.|2024-10-07 09:14|Sent|2|No
-649|charlie.johnson@demo.com|jack.anderson@sample.com|Weekly Status Report|This is an urgent request for action on the pending items.|2024-10-24 22:05|Received|3|Yes
 650|irene.anderson@test.com|jack.lee@demo.com|Invoice Attached|Please review the holiday schedule and let us know your availability.|2024-10-17 02:37|Sent|2|No
 651|charlie.anderson@demo.com|jack.smith@demo.com|Urgent: Action Required|This is an urgent request for action on the pending items.|2024-10-24 20:27|Sent|2|Yes
 652|charlie.lee@test.com|fiona.anderson@example.com|Meeting Reminder|This is an urgent request for action on the pending items.|2024-10-01 11:20|Sent|5|Yes
@@ -846,7 +845,6 @@
 847|charlie.thomas@test.com|jack.anderson@test.com|Holiday Schedule|Here's the latest update on the project. Please review it by end of the week.|2024-10-23 06:41|Sent|1|No
 848|george.brown@example.com|bob.taylor@demo.com|Team Outing Details|We would appreciate your feedback on our latest product.|2024-10-19 22:27|Received|4|No
 849|fiona.thomas@demo.com|george.thomas@demo.com|Holiday Schedule|Here's the latest update on the project. Please review it by end of the week.|2024-10-24 20:38|Sent|5|No
-850|fiona.smith@demo.com|charlie.johnson@demo.com|Team Outing Details|Attached is the invoice for your records. Let us know if you have any questions.|2024-10-07 10:28|Received|3|No
 851|irene.thomas@example.com|jack.brown@example.com|Project Update|Please be reminded of our meeting tomorrow at 10 AM.|2024-10-05 22:55|Sent|4|No
 852|eva.johnson@demo.com|jack.miller@demo.com|Team Outing Details|Important: A new software update is available for installation.|2024-10-22 10:18|Sent|4|No
 853|george.johnson@test.com|alice.taylor@example.com|Invoice Attached|Important: A new software update is available for installation.|2024-10-26 11:34|Received|1|No
