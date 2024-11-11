@@ -1,1 +1,2 @@
 922|george.davis@example.com|charlie.johnson@demo.com|Feedback Request|Please review the holiday schedule and let us know your availability.|2024-10-20 20:27|Sent|2|No
+612|charlie.johnson@demo.com|bob.brown@example.com|Holiday Schedule|Here's the latest update on the project. Please review it by end of the week.|2024-10-20 00:05|Received|3|No
